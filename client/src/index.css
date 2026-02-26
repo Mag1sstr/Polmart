@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100..900&display=swap");
+@import "tailwindcss";
+
+:root {
+  --prime: #9bd147;
+  --black: #424242;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+body {
+  color: #424242;
+  font-family: "Roboto", sans-serif;
+  line-height: 1.15;
+}
+.wrp {
+  position: fixed;
+  inset: 0;
+  background-image: url(/body.webp);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+.montserrat {
+  font-family: "Montserrat", sans-serif;
+}
+.wAnim {
+  animation: wAnim 1.5s infinite linear;
+  &:nth-child(2) {
+    animation-delay: 2s;
+  }
+  &:nth-child(3) {
+    animation-delay: 5s;
+  }
+}
+@keyframes wAnim {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
