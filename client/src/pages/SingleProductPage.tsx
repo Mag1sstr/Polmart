@@ -3,8 +3,64 @@ import Footer from "../components/layout/Footer";
 import Group from "../components/layout/Group";
 import Header from "../components/layout/Header";
 
+const TABS = [
+  {
+    name: "Описание",
+    content: (
+      <div>
+        <p>
+          Ламинат VöLKE Herringbone, в коллекции Grand Wood Luxe <br />
+          это 48 часов влагостойкости, супер плотная плита HDF Ultra и 10
+          вариантов сборки! <br /> <br />
+          Елочка VöLKE обеспечивает новую интерпретацию классики и придает ей
+          современный и инновационный вид. Вневременные конструкции дерева
+          дополняются модифицированной проверенной ранее системой универсального
+          монтажа UNICLIK Belgium. <br /> <br />
+          Откройте для себя преимущества использования высококачественного
+          влагостойкого ламината с уникальной коллекцией Grand Wood Luxe.
+          Толщина 12 мм делает его чрезвычайно стабильным и прочным. Он также
+          может использоваться с теплым полом и позволит вам наслаждаться
+          приятным на ощупь теплым покрытием. На комфорт пользователя также
+          влияет синхронная структура, с четко видимым и ощутимым расположением
+          рисунка. <br /> <br />
+          Влагостойкий ламинат VöLKE Herringbone доступен в нескольких декорах.
+          Они напоминают натуральное дерево светлых и темных оттенков
+          коричневого и нежно отбеленных серых. Отдельные доски заметно
+          отличаются друг от друга, поэтому пол выглядит естественно. Это стало
+          возможным благодаря дополнительной пропиткой краев и защитой
+          V-образной фаской. <br /> <br />
+          From Sweden with love!
+        </p>
+      </div>
+    ),
+  },
+  {
+    name: "Характеристики",
+    content: (
+      <div>
+        <p>
+          Откройте для себя преимущества использования высококачественного
+          влагостойкого ламината с уникальной коллекцией Grand Wood Luxe.
+          Толщина 12 мм делает его чрезвычайно стабильным и прочным. Он также
+          может использоваться с теплым полом и позволит вам наслаждаться
+          приятным на ощупь теплым покрытием. На комфорт пользователя также
+          влияет синхронная структура, с четко видимым и ощутимым расположением
+          рисунка. <br /> <br />
+          Влагостойкий ламинат VöLKE Herringbone доступен в нескольких декорах.
+          Они напоминают натуральное дерево светлых и темных оттенков
+          коричневого и нежно отбеленных серых. Отдельные доски заметно
+          отличаются друг от друга, поэтому пол выглядит естественно. Это стало
+          возможным благодаря дополнительной пропиткой краев и защитой
+          V-образной фаской. <br /> <br />
+          From Sweden with love!
+        </p>
+      </div>
+    ),
+  },
+];
 function SingleProductPage() {
   const [count, setCount] = useState(1);
+  const [currentTab, setCurrentTab] = useState(TABS[0]);
 
   const handleInc = () => {
     setCount((prev) => prev + 1);
@@ -24,7 +80,7 @@ function SingleProductPage() {
           <h1 className="text-[2rem] my-5 font-bold">
             SPC VöLKE PRO Stone TERRA YFS08
           </h1>
-          <div className="flex gap-5">
+          <div className="flex gap-5 mb-5">
             <div className="max-w-165 w-full">
               <div className="w-full h-auto mb-5">
                 <img
@@ -105,6 +161,19 @@ function SingleProductPage() {
               </div>
             </div>
           </div>
+
+          <div className="flex border-b-3 border-[#73b211] ">
+            {TABS.map((tab) => (
+              <div
+                key={tab.name}
+                onClick={() => setCurrentTab(tab)}
+                className={`py-2 px-4 bg-[#ececec] cursor-pointer ${currentTab.name === tab.name && "text-white bg-[#73b211]!"}`}
+              >
+                {tab.name}
+              </div>
+            ))}
+          </div>
+          <div className="py-7.5">{currentTab.content}</div>
         </Group>
       </section>
       <Footer />
