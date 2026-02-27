@@ -3,6 +3,7 @@ import HomePage from "../../pages/HomePage";
 import { ROUTES } from "../../utils/routes";
 import ContactsPage from "../../pages/ContactsPage";
 import AboutPage from "../../pages/AboutPage";
+import SingleProductPage from "../../pages/SingleProductPage";
 
 function AppRouter() {
   return (
@@ -10,6 +11,7 @@ function AppRouter() {
       <Route index element={<HomePage />} />
       <Route path={ROUTES.CONTACTS} element={<ContactsPage />} />
       <Route path={ROUTES.ABOUT} element={<AboutPage />} />
+      <Route path={ROUTES.CATALOG + "/:id"} element={<SingleProductPage />} />
     </Routes>
   );
 }
