@@ -1,8 +1,21 @@
+import { useEffect, useState } from "react";
 import Footer from "../components/layout/Footer";
 import Group from "../components/layout/Group";
 import Header from "../components/layout/Header";
 
 function SingleProductPage() {
+  const [count, setCount] = useState(1);
+
+  const handleInc = () => {
+    setCount((prev) => prev + 1);
+  };
+  const handleDesc = () => {
+    if (count <= 1) return;
+    setCount((prev) => prev - 1);
+  };
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   return (
     <>
       <Header />
@@ -61,13 +74,24 @@ function SingleProductPage() {
 
               <div className="flex gap-6.5 items-center">
                 <div className="flex gap-1.5">
-                  <button className="w-8.75 h-8.75 bg-(--prime) text-white flex items-center justify-center rounded-[5px] cursor-pointer">
+                  <button
+                    onClick={handleDesc}
+                    className="w-8.75 h-8.75 bg-(--prime) text-white flex items-center justify-center rounded-[5px] cursor-pointer"
+                  >
                     -
                   </button>
-                  <span className="min-w-10 h-8.75 text-[18px] bg-white border border-(--prime) rounded-[5px] grid place-content-center">
-                    1
+                  <span className="w-10 h-8.75 text-[18px] bg-white border border-(--prime) rounded-[5px] grid place-content-center">
+                    <input
+                      className="w-full text-center appearance-none outline-none"
+                      type="number"
+                      value={count <= 1 ? 1 : count}
+                      onChange={(e) => setCount(+e.target.value)}
+                    />
                   </span>
-                  <button className="w-8.75 h-8.75 bg-(--prime) text-white flex items-center justify-center rounded-[5px] cursor-pointer">
+                  <button
+                    onClick={handleInc}
+                    className="w-8.75 h-8.75 bg-(--prime) text-white flex items-center justify-center rounded-[5px] cursor-pointer"
+                  >
                     +
                   </button>
                 </div>

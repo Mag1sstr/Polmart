@@ -5,4 +5,5 @@ export const ROUTES = {
   NEWS: "/news",
   GALERY: "/galery",
   CONTACTS: "/contacts",
+  PRODUCT: (id: number) => `/catalog/${id}`,
 };
