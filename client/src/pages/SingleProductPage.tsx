@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Footer from "../components/layout/Footer";
 import Group from "../components/layout/Group";
 import Header from "../components/layout/Header";
+import ModalWrapper from "../components/modals/ModalWrapper";
 
 const TABS = [
   {
@@ -61,6 +62,7 @@ const TABS = [
 function SingleProductPage() {
   const [count, setCount] = useState(1);
   const [currentTab, setCurrentTab] = useState(TABS[0]);
+  const [openModal, setOpenModal] = useState(false);
 
   const handleInc = () => {
     setCount((prev) => prev + 1);
@@ -74,6 +76,10 @@ function SingleProductPage() {
   }, []);
   return (
     <>
+      <ModalWrapper open={openModal} setOpen={setOpenModal}>
+        11313
+      </ModalWrapper>
+
       <Header />
       <section>
         <Group>
@@ -159,6 +165,7 @@ function SingleProductPage() {
                   <p>10625 тг/м²</p>
                 </div>
               </div>
+              <button onClick={() => setOpenModal(true)}>купить</button>
             </div>
           </div>
 
