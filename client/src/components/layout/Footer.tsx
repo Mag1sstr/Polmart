@@ -32,7 +32,7 @@ function Footer() {
           </div>
           <div className="mx-7.5 flex-1 text-[20px]">
             <h3 className="mb-7.5 font-bold">Наши товары</h3>
-            <ul className="flex flex-col gap-3.25">
+            <ul className="flex flex-col gap-3.25 [&>li]:hover:text-(--prime) cursor-pointer">
               <li>Паркет</li>
               <li>Ламинат</li>
               <li>Виниловые полы</li>
@@ -44,7 +44,7 @@ function Footer() {
           </div>
           <div className="mx-7.5 flex-1 text-[20px]">
             <h3 className="mb-7.5 font-bold">Наши услуги</h3>
-            <ul className="flex flex-col gap-3.25">
+            <ul className="flex flex-col gap-3.25 [&>li]:hover:text-(--prime) cursor-pointer">
               <li>Выезд специалиста</li>
               <li>Укладка ламината</li>
               <li>Хранение на складе</li>
@@ -54,7 +54,7 @@ function Footer() {
           </div>
           <div className="mx-7.5 flex-1 text-[20px]">
             <h3 className="mb-7.5 font-bold">Информация</h3>
-            <ul className="flex flex-col gap-3.25">
+            <ul className="flex flex-col gap-3.25 [&>li]:hover:text-(--prime) cursor-pointer">
               <li>Как заказать</li>
               <li>Сотрудничество</li>
               <li>Сертификаты</li>
@@ -64,7 +64,7 @@ function Footer() {
           </div>
           <div className="mx-7.5 flex-1 text-[20px]">
             <h3 className="mb-7.5 font-bold">Контакты</h3>
-            <ul className="flex flex-col gap-3.25">
+            <ul className="flex flex-col gap-3.25 [&>li]:hover:text-(--prime) cursor-pointer">
               <li>Адреса салонов</li>
               <li>Карта сайта</li>
             </ul>
