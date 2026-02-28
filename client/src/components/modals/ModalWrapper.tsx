@@ -13,7 +13,7 @@ function ModalWrapper({ open, setOpen, children }: IProps) {
     >
       <div
         className={clsx(
-          "scale-125 bg-white transition-all",
+          "scale-102 bg-white transition-all",
           open && "scale-100!",
         )}
         onMouseDown={(e) => e.stopPropagation()}

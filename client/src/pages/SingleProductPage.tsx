@@ -3,6 +3,7 @@ import Footer from "../components/layout/Footer";
 import Group from "../components/layout/Group";
 import Header from "../components/layout/Header";
 import ModalWrapper from "../components/modals/ModalWrapper";
+import BuyProductModal from "../components/modals/BuyProductModal";
 
 const TABS = [
   {
@@ -76,9 +77,7 @@ function SingleProductPage() {
   }, []);
   return (
     <>
-      <ModalWrapper open={openModal} setOpen={setOpenModal}>
-        11313
-      </ModalWrapper>
+      <BuyProductModal open={openModal} setOpen={setOpenModal} />
 
       <Header />
       <section>
