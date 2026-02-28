@@ -1,13 +1,33 @@
+import { useEffect, useState } from "react";
 import Footer from "../components/layout/Footer";
 import Group from "../components/layout/Group";
 import Header from "../components/layout/Header";
 import ProductList from "../components/layout/ProductList";
 import Slider from "../components/layout/Slider";
 import SeoText from "../components/ui/SeoText";
+import ConsultModal from "../components/modals/ConsultModal";
 
 function HomePage() {
+  const [openConsult, setOpenConsult] = useState(false);
+
+  useEffect(() => {
+    const wasShown = sessionStorage.getItem("consultShown");
+    if (wasShown) return;
+
+    const handleScroll = () => {
+      if (window.scrollY > 950) {
+        setOpenConsult(true);
+        sessionStorage.setItem("consultShown", "true");
+        window.removeEventListener("scroll", handleScroll);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [openConsult]);
+
   return (
     <>
+      <ConsultModal open={openConsult} setOpen={setOpenConsult} />
       <Header />
       <Slider />
       <Group title="Акции" children={<ProductList />} />
