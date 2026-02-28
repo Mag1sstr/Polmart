@@ -75,6 +75,8 @@ function SingleProductPage() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
+
+  //
   return (
     <>
       <BuyProductModal open={openModal} setOpen={setOpenModal} />
