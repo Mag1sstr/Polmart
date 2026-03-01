@@ -1,17 +1,29 @@
 import Footer from "../components/layout/Footer";
 import Group from "../components/layout/Group";
 import Header from "../components/layout/Header";
+import ProductCard from "../components/ui/ProductCard";
 
 function CatalogProductsPage() {
   return (
     <>
       <Header />
       <Group>
-        <h1 className="py-5">Ламинат</h1>
+        <h1 className="py-5 text-[2rem] font-bold">Ламинат</h1>
 
         <div className="flex gap-10">
-          <div className="w-[260px]"></div>
-          <div className="flex-1"></div>
+          <div className="w-[260px] ">
+            <div className="rounded-[5px] overflow-hidden bg-[#eefcea] pb-5">
+              <h2 className="bg-white p-2 font-medium">Фильтры</h2>
+              <div className=" flex flex-col gap-5"></div>
+            </div>
+          </div>
+          <div className="flex-1 grid grid-cols-3 gap-8.75">
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+            <ProductCard />
+          </div>
         </div>
       </Group>
       <Footer />
