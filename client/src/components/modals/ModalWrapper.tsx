@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { AnimatePresence, motion } from "motion/react";
+import CloseBtn from "../ui/CloseBtn";
 
 // invisible opacity-0
 
@@ -29,6 +30,7 @@ function ModalWrapper({ open, setOpen, children }: IProps) {
             )}
             onMouseDown={(e) => e.stopPropagation()}
           >
+            <CloseBtn onClick={() => setOpen(false)} />
             {children}
           </motion.div>
         </motion.div>
