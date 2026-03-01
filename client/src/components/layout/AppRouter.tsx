@@ -14,7 +14,7 @@ function AppRouter() {
       <Route path={ROUTES.CONTACTS} element={<ContactsPage />} />
       <Route path={ROUTES.ABOUT} element={<AboutPage />} />
       <Route path={ROUTES.CATALOG} element={<CatalogPage />} />
-      <Route path={ROUTES.CATALOG + "/:id"} element={<SingleProductPage />} />
+      <Route path={ROUTES.PRODUCT(":id")} element={<SingleProductPage />} />
       <Route path={ROUTES.ADMIN} element={<AdminPage />} />
     </Routes>
   );

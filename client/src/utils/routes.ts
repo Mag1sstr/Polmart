@@ -6,5 +6,6 @@ export const ROUTES = {
   GALERY: "/galery",
   CONTACTS: "/contacts",
   ADMIN: "/admin",
-  PRODUCT: (id: number) => `/catalog/${id}`,
+  PRODUCT: (id: string) => `/product/${id}`,
+  CATALOG_PRODUCTS: (id: string) => `${ROUTES.CATALOG}/${id}`,
 };
