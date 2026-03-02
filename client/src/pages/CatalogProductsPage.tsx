@@ -1,9 +1,12 @@
+import { useState } from "react";
 import Footer from "../components/layout/Footer";
 import Group from "../components/layout/Group";
 import Header from "../components/layout/Header";
+import Pagination from "../components/layout/Pagination";
 import ProductCard from "../components/ui/ProductCard";
 
 function CatalogProductsPage() {
+  const [currentPage, setCurrentPage] = useState(1);
   return (
     <>
       <Header />
@@ -17,12 +20,19 @@ function CatalogProductsPage() {
               <div className=" flex flex-col gap-5"></div>
             </div>
           </div>
-          <div className="flex-1 grid grid-cols-3 gap-8.75">
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+          <div className="flex-1 ">
+            <div className="grid grid-cols-3 gap-8.75">
+              <ProductCard />
+              <ProductCard />
+              <ProductCard />
+              <ProductCard />
+              <ProductCard />
+            </div>
+            <Pagination
+              totalPages={10}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+            />
           </div>
         </div>
       </Group>
