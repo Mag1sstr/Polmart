@@ -4,12 +4,14 @@ import Group from "../components/layout/Group";
 import Header from "../components/layout/Header";
 import Pagination from "../components/layout/Pagination";
 import ProductCard from "../components/ui/ProductCard";
+import Breadcrumbs from "../components/layout/Breadcrumbs";
 
 function CatalogProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   return (
     <>
       <Header />
+      <Breadcrumbs />
       <Group>
         <h1 className="py-5 text-[2rem] font-bold">Ламинат</h1>
 
