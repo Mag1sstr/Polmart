@@ -42,12 +42,14 @@ function Pagination({ totalPages, currentPage, setCurrentPage }: IProps) {
 
   return (
     <section className="flex justify-center my-12.5 gap-2.5 text-[14px]">
-      <button
-        onClick={handlePrev}
-        className="py-1.75 px-2.5 bg-white rounded-sm cursor-pointer transition-all hover:text-white hover:bg-[#73b211] active:brightness-95"
-      >
-        Назад
-      </button>
+      {currentPage > 1 && (
+        <button
+          onClick={handlePrev}
+          className="py-1.75 px-2.5 bg-white rounded-sm cursor-pointer transition-all hover:text-white hover:bg-[#73b211] active:brightness-95"
+        >
+          Назад
+        </button>
+      )}
       <ul className="flex gap-2.5">
         {pages.map((page) =>
           page === "..." ? (
@@ -65,12 +67,14 @@ function Pagination({ totalPages, currentPage, setCurrentPage }: IProps) {
           ),
         )}
       </ul>
-      <button
-        onClick={handleNext}
-        className="py-1.75 px-2.5 bg-white rounded-sm cursor-pointer transition-all hover:text-white hover:bg-[#73b211] active:brightness-95"
-      >
-        Дальше
-      </button>
+      {currentPage < totalPages && (
+        <button
+          onClick={handleNext}
+          className="py-1.75 px-2.5 bg-white rounded-sm cursor-pointer transition-all hover:text-white hover:bg-[#73b211] active:brightness-95"
+        >
+          Дальше
+        </button>
+      )}
     </section>
   );
 }
