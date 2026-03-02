@@ -1,18 +1,25 @@
 import clsx from "clsx";
 import { Link, useLocation } from "react-router-dom";
 
+const breadcrumbsNames: Record<string, string> = {
+  catalog: "Каталог",
+  news: "Новости",
+  product: "Продукт",
+  gallery: "Галерея",
+  about: "О компании",
+  contacts: "Контакты",
+};
+
 function Breadcrumbs() {
   const { pathname } = useLocation();
   const path = pathname.split("/").filter(Boolean);
-
-  console.log(path);
 
   return (
     <section className="py-2.5 bg-[#ecececb3]">
       <div className="container">
         <ul className="flex gap-2.5">
           {path.map((str, i) => (
-            <Link to={`/${str}`}>
+            <Link key={str} to={`/${str}`}>
               <li
                 className={clsx(
                   "first-letter:uppercase flex gap-2.5 items-center underline cursor-pointer",
@@ -34,7 +41,7 @@ function Breadcrumbs() {
                     />
                   </svg>
                 )}
-                {str[0].toUpperCase() + str.slice(1)}
+                {breadcrumbsNames[str] || str}
               </li>
             </Link>
           ))}
