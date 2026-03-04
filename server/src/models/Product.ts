@@ -1,12 +1,15 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface IProduct {
+  title: string;
+  description: string;
+  discount: number;
   price: number;
   class: number;
   thickness: number;
   size: string;
   package: number;
-  moistureResistance: string;
+  moistureResistance: boolean;
   material: string;
   chamfer: string;
   collection: string;
@@ -17,7 +20,6 @@ export interface IProduct {
   boardLengthMm: number;
   boardWidthMm: number;
   areaM2: number;
-  pricePer: string;
   category?: mongoose.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
@@ -25,27 +27,28 @@ export interface IProduct {
 
 const ProductSchema = new Schema<IProduct>(
   {
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    discount: { type: Number, default: 0 },
     price: { type: Number, required: true },
-    class: { type: Number, required: true },
-    thickness: { type: Number, required: true },
-    size: { type: String, required: true },
-    package: { type: Number, required: true },
-    moistureResistance: { type: String, required: true },
-    material: { type: String, required: true },
-    chamfer: { type: String, required: true },
-    collection: { type: String, required: true },
-    manufacturer: { type: String, required: true },
-    country: { type: String, required: true },
-    pattern: { type: String, required: true },
+    class: { type: Number },
+    thickness: { type: Number },
+    size: { type: String },
+    package: { type: Number },
+    moistureResistance: { type: Boolean },
+    material: { type: String },
+    chamfer: { type: String },
+    collection: { type: String },
+    manufacturer: { type: String },
+    country: { type: String },
+    pattern: { type: String },
     isNew: { type: Boolean, default: false },
-    boardLengthMm: { type: Number, required: true },
-    boardWidthMm: { type: Number, required: true },
-    areaM2: { type: Number, required: true },
-    pricePer: { type: String, required: true },
-    category: { type: Schema.Types.ObjectId, ref: "Category" }
+    boardLengthMm: { type: Number },
+    boardWidthMm: { type: Number },
+    areaM2: { type: Number },
+    category: { type: Schema.Types.ObjectId, ref: "Category" },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const Product = mongoose.model<IProduct>("Product", ProductSchema);
-

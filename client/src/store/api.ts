@@ -4,24 +4,26 @@ const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 export interface Product {
   _id: string;
+  title: string;
+  description: string;
+  discount?: number;
   price: number;
-  class: number;
-  thickness: number;
-  size: string;
-  package: number;
-  moistureResistance: string;
-  material: string;
-  chamfer: string;
-  collection: string;
-  manufacturer: string;
-  country: string;
-  pattern: string;
-  isNew: boolean;
-  boardLengthMm: number;
-  boardWidthMm: number;
-  areaM2: number;
-  pricePer: string;
-  category?: string;
+  class?: number;
+  thickness?: number;
+  size?: string;
+  package?: number;
+  moistureResistance?: string;
+  material?: string;
+  chamfer?: string;
+  collection?: string;
+  manufacturer?: string;
+  country?: string;
+  pattern?: string;
+  isNew?: boolean;
+  boardLengthMm?: number;
+  boardWidthMm?: number;
+  areaM2?: number;
+  category: string;
 }
 
 export interface Category {
@@ -51,7 +53,10 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl }),
   tagTypes: ["Product", "Category", "News", "Gallery"],
   endpoints: (builder) => ({
-    checkAdmin: builder.mutation<{ ok: boolean }, { username: string; password: string }>({
+    checkAdmin: builder.mutation<
+      { ok: boolean },
+      { username: string; password: string }
+    >({
       query: (body) => ({
         url: "/admin/check",
         method: "POST",
@@ -71,7 +76,10 @@ export const api = createApi({
       }),
       invalidatesTags: ["Product"],
     }),
-    updateProduct: builder.mutation<Product, { id: string; data: Partial<Omit<Product, "_id">> }>({
+    updateProduct: builder.mutation<
+      Product,
+      { id: string; data: Partial<Omit<Product, "_id">> }
+    >({
       query: ({ id, data }) => ({
         url: `/products/${id}`,
         method: "PUT",
@@ -99,16 +107,17 @@ export const api = createApi({
       }),
       invalidatesTags: ["Category"],
     }),
-    updateCategory: builder.mutation<Category, { id: string; data: Partial<Omit<Category, "_id">> }>(
-      {
-        query: ({ id, data }) => ({
-          url: `/categories/${id}`,
-          method: "PUT",
-          body: data,
-        }),
-        invalidatesTags: ["Category"],
-      },
-    ),
+    updateCategory: builder.mutation<
+      Category,
+      { id: string; data: Partial<Omit<Category, "_id">> }
+    >({
+      query: ({ id, data }) => ({
+        url: `/categories/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["Category"],
+    }),
     deleteCategory: builder.mutation<void, string>({
       query: (id) => ({
         url: `/categories/${id}`,
@@ -129,7 +138,10 @@ export const api = createApi({
       }),
       invalidatesTags: ["News"],
     }),
-    updateNews: builder.mutation<NewsItem, { id: string; data: Partial<Omit<NewsItem, "_id">> }>({
+    updateNews: builder.mutation<
+      NewsItem,
+      { id: string; data: Partial<Omit<NewsItem, "_id">> }
+    >({
       query: ({ id, data }) => ({
         url: `/news/${id}`,
         method: "PUT",
@@ -197,4 +209,3 @@ export const {
   useUpdateGalleryItemMutation,
   useDeleteGalleryItemMutation,
 } = api;
-
