@@ -7,6 +7,12 @@ import {
   type Product,
 } from "../../store/api";
 import Input from "../ui/Input";
+import { objectToFormData } from "../../utils/objectToFormData";
+import type { ProductFormData } from "../../types/types";
+
+interface IEdit extends ProductFormData {
+  _id: string;
+}
 
 function ProductsTab() {
   const { data: products } = useGetProductsQuery();
@@ -14,7 +20,7 @@ function ProductsTab() {
   const [updateProduct] = useUpdateProductMutation();
   const [deleteProduct] = useDeleteProductMutation();
 
-  const emptyProduct: Omit<Product, "_id"> = {
+  const emptyProduct: ProductFormData = {
     title: "",
     description: "",
     discount: 0,
@@ -23,7 +29,7 @@ function ProductsTab() {
     thickness: 0,
     size: "",
     package: 0,
-    moistureResistance: "",
+    moistureResistance: false,
     material: "",
     chamfer: "",
     collection: "",
@@ -35,18 +41,19 @@ function ProductsTab() {
     boardWidthMm: 0,
     areaM2: 0,
     category: "",
+    images: [],
   };
 
-  const [form, setForm] = useState<Omit<Product, "_id">>(emptyProduct);
+  const [form, setForm] = useState<ProductFormData>(emptyProduct);
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [images, setImages] = useState<FileList | null>(null);
+  // const [images, setImages] = useState<File[] | null>(null);
   const [preview, setPreview] = useState<string[] | null>(null);
 
   const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
     const arrayFiles = Array.from(files);
-    setImages(files);
+    setForm((prev) => ({ ...prev, images: arrayFiles }));
     // setPreview([...Array(files?.length)].map((el) => URL.createObjectURL(el)));
     setPreview(arrayFiles.map((image) => URL.createObjectURL(image)));
   };
@@ -68,10 +75,13 @@ function ProductsTab() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const formData = objectToFormData<ProductFormData>(form);
+
     if (editingId) {
       await updateProduct({ id: editingId, data: form }).unwrap();
     } else {
-      await createProduct(form).unwrap();
+      await createProduct(formData).unwrap();
     }
     setForm(emptyProduct);
     setEditingId(null);
@@ -139,11 +149,7 @@ function ProductsTab() {
             value={form.package || ""}
             onChange={(v) => handleChange("package", v)}
           />
-          <Input
-            label="Влагостойкость"
-            value={form.moistureResistance || ""}
-            onChange={(v) => handleChange("moistureResistance", v)}
-          />
+
           <Input
             label="Материал"
             value={form.material || ""}
@@ -196,6 +202,16 @@ function ProductsTab() {
             type="checkbox"
             checked={form.isNew}
             onChange={(e) => handleChange("isNew", e.target.checked)}
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <label className="text-sm">Влагостойкость</label>
+          <input
+            type="checkbox"
+            checked={form.moistureResistance}
+            onChange={(e) =>
+              handleChange("moistureResistance", e.target.checked)
+            }
           />
         </div>
 

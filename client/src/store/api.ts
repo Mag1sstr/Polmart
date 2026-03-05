@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import type { ProductFormData } from "../types/types";
 
 const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
@@ -12,7 +13,7 @@ export interface Product {
   thickness?: number;
   size?: string;
   package?: number;
-  moistureResistance?: string;
+  moistureResistance?: boolean;
   material?: string;
   chamfer?: string;
   collection?: string;
@@ -24,6 +25,7 @@ export interface Product {
   boardWidthMm?: number;
   areaM2?: number;
   category: string;
+  images: File[];
 }
 
 export interface Category {
@@ -68,7 +70,7 @@ export const api = createApi({
       query: () => "/products",
       providesTags: ["Product"],
     }),
-    createProduct: builder.mutation<Product, Omit<Product, "_id">>({
+    createProduct: builder.mutation<Product, FormData>({
       query: (body) => ({
         url: "/products",
         method: "POST",
