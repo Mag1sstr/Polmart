@@ -8,6 +8,8 @@ const breadcrumbsNames: Record<string, string> = {
   gallery: "Галерея",
   about: "О компании",
   contacts: "Контакты",
+  laminate: "Ламинат",
+  parquet: "Паркет",
 };
 
 function Breadcrumbs() {

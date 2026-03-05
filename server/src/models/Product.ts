@@ -23,6 +23,7 @@ export interface IProduct {
   category?: mongoose.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
+  images: string[];
 }
 
 const ProductSchema = new Schema<IProduct>(
@@ -46,6 +47,7 @@ const ProductSchema = new Schema<IProduct>(
     boardLengthMm: { type: Number },
     boardWidthMm: { type: Number },
     areaM2: { type: Number },
+    images: [String],
     category: { type: Schema.Types.ObjectId, ref: "Category" },
   },
   { timestamps: true },

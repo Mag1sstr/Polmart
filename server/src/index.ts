@@ -26,6 +26,7 @@ app.get("/api/health", (_req, res) => {
 });
 
 // Routes
+app.use("/uploads", express.static("uploads"));
 app.use("/api/products", productRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/news", newsRoutes);
@@ -50,4 +51,3 @@ const start = async () => {
 };
 
 start();
-

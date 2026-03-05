@@ -5,16 +5,18 @@ import Header from "../components/layout/Header";
 import { ROUTES } from "../utils/routes";
 import { useGetCategoriesQuery } from "../store/api";
 import Loader from "../components/ui/Loader";
+import Breadcrumbs from "../components/layout/Breadcrumbs";
 
 function CatalogPage() {
   const { data: categories, isError, isLoading } = useGetCategoriesQuery();
   return (
     <>
       <Header />
+      <Breadcrumbs />
       <Group>
         <h1 className="py-5 text-[2rem] font-bold">Каталог</h1>
         {isError && <p className="text-3xl">Что то пошло не так</p>}
-        <Loader />
+        {isLoading && <Loader />}
         <ul className="grid grid-cols-3 gap-8.75 text-white text-[48px]">
           {categories?.map(({ _id, img, name, slug }) => (
             <Link key={_id} to={ROUTES.CATALOG_PRODUCTS(slug)}>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 import {
   useCreateProductMutation,
   useDeleteProductMutation,
@@ -39,6 +39,17 @@ function ProductsTab() {
 
   const [form, setForm] = useState<Omit<Product, "_id">>(emptyProduct);
   const [editingId, setEditingId] = useState<string | null>(null);
+  const [images, setImages] = useState<FileList | null>(null);
+  const [preview, setPreview] = useState<string[] | null>(null);
+
+  const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+    const arrayFiles = Array.from(files);
+    setImages(files);
+    // setPreview([...Array(files?.length)].map((el) => URL.createObjectURL(el)));
+    setPreview(arrayFiles.map((image) => URL.createObjectURL(image)));
+  };
 
   const handleChange = (
     field: keyof Omit<Product, "_id">,
@@ -77,105 +88,107 @@ function ProductsTab() {
     <div className="bg-white border rounded-b p-4 space-y-6">
       <h2 className="text-lg font-semibold">Продукты</h2>
       <p>* - Обязательное поле</p>
-      <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-3 text-sm">
-        <Input
-          label="Название *"
-          value={form.title}
-          onChange={(v) => handleChange("title", v)}
-        />
-        <Input
-          label="Цена *"
-          type="number"
-          value={form.price}
-          onChange={(v) => handleChange("price", v)}
-        />
-        <Input
-          label="Описание *"
-          value={form.description}
-          onChange={(v) => handleChange("description", v)}
-        />
-        <Input
-          label="Категория *"
-          value={form.category || ""}
-          onChange={(v) => handleChange("category", v)}
-        />
-        <Input
-          label="Страна"
-          value={form.country || ""}
-          onChange={(v) => handleChange("country", v)}
-        />
-        <Input
-          label="Класс"
-          type="number"
-          value={form.class || 0}
-          onChange={(v) => handleChange("class", v)}
-        />
-        <Input
-          label="Толщина"
-          type="number"
-          value={form.thickness || 0}
-          onChange={(v) => handleChange("thickness", v)}
-        />
-        <Input
-          label="Размер"
-          value={form.size || ""}
-          onChange={(v) => handleChange("size", v)}
-        />
-        <Input
-          label="Упаковка"
-          type="number"
-          value={form.package || ""}
-          onChange={(v) => handleChange("package", v)}
-        />
-        <Input
-          label="Влагостойкость"
-          value={form.moistureResistance || ""}
-          onChange={(v) => handleChange("moistureResistance", v)}
-        />
-        <Input
-          label="Материал"
-          value={form.material || ""}
-          onChange={(v) => handleChange("material", v)}
-        />
-        <Input
-          label="Фаска"
-          value={form.chamfer || ""}
-          onChange={(v) => handleChange("chamfer", v)}
-        />
-        <Input
-          label="Коллекция"
-          value={form.collection || ""}
-          onChange={(v) => handleChange("collection", v)}
-        />
-        <Input
-          label="Производитель"
-          value={form.manufacturer || ""}
-          onChange={(v) => handleChange("manufacturer", v)}
-        />
+      <form onSubmit={handleSubmit} className="text-sm">
+        <div className="grid grid-cols-2 gap-3 mb-3">
+          <Input
+            label="Название *"
+            value={form.title}
+            onChange={(v) => handleChange("title", v)}
+          />
+          <Input
+            label="Цена *"
+            type="number"
+            value={form.price}
+            onChange={(v) => handleChange("price", v)}
+          />
+          <Input
+            label="Описание *"
+            value={form.description}
+            onChange={(v) => handleChange("description", v)}
+          />
+          <Input
+            label="Категория *"
+            value={form.category || ""}
+            onChange={(v) => handleChange("category", v)}
+          />
+          <Input
+            label="Страна"
+            value={form.country || ""}
+            onChange={(v) => handleChange("country", v)}
+          />
+          <Input
+            label="Класс"
+            type="number"
+            value={form.class || 0}
+            onChange={(v) => handleChange("class", v)}
+          />
+          <Input
+            label="Толщина"
+            type="number"
+            value={form.thickness || 0}
+            onChange={(v) => handleChange("thickness", v)}
+          />
+          <Input
+            label="Размер"
+            value={form.size || ""}
+            onChange={(v) => handleChange("size", v)}
+          />
+          <Input
+            label="Упаковка"
+            type="number"
+            value={form.package || ""}
+            onChange={(v) => handleChange("package", v)}
+          />
+          <Input
+            label="Влагостойкость"
+            value={form.moistureResistance || ""}
+            onChange={(v) => handleChange("moistureResistance", v)}
+          />
+          <Input
+            label="Материал"
+            value={form.material || ""}
+            onChange={(v) => handleChange("material", v)}
+          />
+          <Input
+            label="Фаска"
+            value={form.chamfer || ""}
+            onChange={(v) => handleChange("chamfer", v)}
+          />
+          <Input
+            label="Коллекция"
+            value={form.collection || ""}
+            onChange={(v) => handleChange("collection", v)}
+          />
+          <Input
+            label="Производитель"
+            value={form.manufacturer || ""}
+            onChange={(v) => handleChange("manufacturer", v)}
+          />
 
-        <Input
-          label="Рисунок"
-          value={form.pattern || ""}
-          onChange={(v) => handleChange("pattern", v)}
-        />
-        <Input
-          label="Длина доски (мм)"
-          type="number"
-          value={form.boardLengthMm || 0}
-          onChange={(v) => handleChange("boardLengthMm", v)}
-        />
-        <Input
-          label="Ширина доски (мм)"
-          type="number"
-          value={form.boardWidthMm || 0}
-          onChange={(v) => handleChange("boardWidthMm", v)}
-        />
-        <Input
-          label="Метраж (м2)"
-          type="number"
-          value={form.areaM2 || 0}
-          onChange={(v) => handleChange("areaM2", v)}
-        />
+          <Input
+            label="Рисунок"
+            value={form.pattern || ""}
+            onChange={(v) => handleChange("pattern", v)}
+          />
+          <Input
+            label="Длина доски (мм)"
+            type="number"
+            value={form.boardLengthMm || 0}
+            onChange={(v) => handleChange("boardLengthMm", v)}
+          />
+          <Input
+            label="Ширина доски (мм)"
+            type="number"
+            value={form.boardWidthMm || 0}
+            onChange={(v) => handleChange("boardWidthMm", v)}
+          />
+          <Input
+            label="Метраж (м2)"
+            type="number"
+            value={form.areaM2 || 0}
+            onChange={(v) => handleChange("areaM2", v)}
+          />
+        </div>
 
         <div className="flex items-center gap-2">
           <label className="text-sm">Новинка</label>
@@ -185,8 +198,26 @@ function ProductsTab() {
             onChange={(e) => handleChange("isNew", e.target.checked)}
           />
         </div>
+
+        <div className="flex gap-2.5">
+          {preview &&
+            preview.map((image) => (
+              <img
+                key={image}
+                src={image}
+                className="w-40 h-40 object-cover rounded"
+                alt="product-image"
+              />
+            ))}
+        </div>
         <div className="col-span-2 flex gap-2 mt-2">
-          <input className="hidden" id="file" type="file" />
+          <input
+            onChange={handleImage}
+            className="hidden"
+            id="file"
+            type="file"
+            multiple
+          />
           <label
             htmlFor="file"
             className="bg-blue-500 text-white grid place-content-center px-4 rounded cursor-pointer "
