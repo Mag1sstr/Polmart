@@ -5,9 +5,22 @@ import Header from "../components/layout/Header";
 import Pagination from "../components/layout/Pagination";
 import ProductCard from "../components/ui/ProductCard";
 import Breadcrumbs from "../components/layout/Breadcrumbs";
+import { useGetProductsQuery } from "../store/api";
+import { useParams } from "react-router-dom";
 
 function CatalogProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
+  const { id } = useParams();
+  const {
+    data: products,
+    isLoading,
+    isError,
+  } = useGetProductsQuery({
+    categoryId: id,
+  });
+  const pageSize = 6;
+  const totalPages = products ? Math.ceil(products.length / pageSize) : 0;
+
   return (
     <>
       <Header />
@@ -24,14 +37,16 @@ function CatalogProductsPage() {
           </div>
           <div className="flex-1 ">
             <div className="grid grid-cols-3 gap-8.75">
+              {products?.map((product) => (
+                <ProductCard key={product._id} {...product} />
+              ))}
+              {/* <ProductCard />
               <ProductCard />
               <ProductCard />
-              <ProductCard />
-              <ProductCard />
-              <ProductCard />
+              <ProductCard /> */}
             </div>
             <Pagination
-              totalPages={10}
+              totalPages={totalPages}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
             />

@@ -7,7 +7,9 @@ export const getProducts = async (
   next: NextFunction,
 ) => {
   try {
-    const products = await Product.find().populate("category");
+    const { categoryId } = req.query;
+    const filter = categoryId ? { category: categoryId } : {};
+    const products = await Product.find(filter).populate("category");
     res.json(products);
   } catch (err) {
     next(err);

@@ -24,7 +24,7 @@ export interface Product {
   boardLengthMm?: number;
   boardWidthMm?: number;
   areaM2?: number;
-  category: string;
+  category: Category;
   images: File[];
 }
 
@@ -66,8 +66,11 @@ export const api = createApi({
       }),
     }),
 
-    getProducts: builder.query<Product[], void>({
-      query: () => "/products",
+    getProducts: builder.query<Product[], { categoryId?: string }>({
+      query: (params) => ({
+        url: "/products",
+        params,
+      }),
       providesTags: ["Product"],
     }),
     createProduct: builder.mutation<Product, FormData>({

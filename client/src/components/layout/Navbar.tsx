@@ -23,7 +23,7 @@ function Navbar() {
           </div>
           <ul className="flex gap-5 text-[18px] text-white ">
             {NAV_LINKS.map((link) => (
-              <Link to={link.path}>
+              <Link key={link.path} to={link.path}>
                 <li
                   className="hover:text-(--black) transition-all cursor-pointer"
                   key={link.name}

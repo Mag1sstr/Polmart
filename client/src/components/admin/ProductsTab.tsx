@@ -40,7 +40,12 @@ function ProductsTab() {
     boardLengthMm: 0,
     boardWidthMm: 0,
     areaM2: 0,
-    category: "",
+    category: {
+      _id: "",
+      name: "",
+      slug: "",
+      img: "",
+    },
     images: [],
   };
 
@@ -116,11 +121,11 @@ function ProductsTab() {
             value={form.description}
             onChange={(v) => handleChange("description", v)}
           />
-          <Input
+          {/* <Input
             label="Категория *"
             value={form.category || ""}
             onChange={(v) => handleChange("category", v)}
-          />
+          /> */}
           <Input
             label="Страна"
             value={form.country || ""}

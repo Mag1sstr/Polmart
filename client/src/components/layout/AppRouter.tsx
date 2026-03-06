@@ -19,7 +19,7 @@ function AppRouter() {
         path={ROUTES.CATALOG_PRODUCTS(":id")}
         element={<CatalogProductsPage />}
       />
-      <Route path={ROUTES.PRODUCT(":id")} element={<SingleProductPage />} />
+      <Route path="/catalog/:id/:productId" element={<SingleProductPage />} />
       <Route path={ROUTES.ADMIN} element={<AdminPage />} />
     </Routes>
   );

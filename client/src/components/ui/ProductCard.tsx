@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../utils/routes";
+import type { Product } from "../../store/api";
 
-function ProductCard() {
-  const openProductPage = () => {};
+interface IProps extends Product {}
 
+function ProductCard({ _id, category, images, price, title, isNew }: IProps) {
   return (
     <article className="flex  flex-col rounded-[5px] overflow-hidden shadow-[0_0_10px_rgba(0,0,0,0.25)] bg-white">
-      <Link to={ROUTES.PRODUCT(1)}>
+      <Link to={`/catalog/${category?.slug}/${_id}`}>
         <div className="w-full h-[197px]">
           <img
             className="w-full h-full object-cover"
@@ -42,7 +43,7 @@ function ProductCard() {
           </li>
         </ul>
         <p className="mb-5 text-[18px] montserrat">13500 тг/м²</p>
-        <Link to={ROUTES.PRODUCT(1)}>
+        <Link to={`/catalog/${category?.slug}/${_id}`}>
           <button className="w-full transition-all cursor-pointer mt-auto text-(--prime) border border-(--prime) text-[15px] leading-5 h-10 hover:text-white hover:bg-(--prime)">
             Подробнее
           </button>
