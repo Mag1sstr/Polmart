@@ -73,6 +73,11 @@ export const api = createApi({
       }),
       providesTags: ["Product"],
     }),
+    getSingleProduct: builder.query<Product, string>({
+      query: (id) => ({
+        url: `/products/${id}`,
+      }),
+    }),
     createProduct: builder.mutation<Product, FormData>({
       query: (body) => ({
         url: "/products",
@@ -213,4 +218,5 @@ export const {
   useCreateGalleryItemMutation,
   useUpdateGalleryItemMutation,
   useDeleteGalleryItemMutation,
+  useGetSingleProductQuery,
 } = api;

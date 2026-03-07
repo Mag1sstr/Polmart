@@ -6,7 +6,8 @@ import Pagination from "../components/layout/Pagination";
 import ProductCard from "../components/ui/ProductCard";
 import Breadcrumbs from "../components/layout/Breadcrumbs";
 import { useGetProductsQuery } from "../store/api";
-import { useParams } from "react-router-dom";
+import { data, useParams } from "react-router-dom";
+import Loader from "../components/ui/Loader";
 
 function CatalogProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,6 +16,8 @@ function CatalogProductsPage() {
     data: products,
     isLoading,
     isError,
+    isSuccess,
+    status,
   } = useGetProductsQuery(
     {
       categorySlug: categorySlug,
@@ -23,6 +26,8 @@ function CatalogProductsPage() {
   );
   const pageSize = 6;
   const totalPages = products ? Math.ceil(products.length / pageSize) : 0;
+
+  console.log(status);
 
   return (
     <>
@@ -39,7 +44,10 @@ function CatalogProductsPage() {
             </div>
           </div>
           <div className="flex-1 ">
-            {isError && <p>Что-то пошло не так</p>}
+            {isLoading && <Loader />}
+            {isSuccess && !products.length && (
+              <p>Нет продуктов этой категории.</p>
+            )}
             <div className="grid grid-cols-3 gap-8.75">
               {products?.map((product) => (
                 <ProductCard key={product._id} {...product} />

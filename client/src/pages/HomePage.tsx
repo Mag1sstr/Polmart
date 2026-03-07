@@ -6,9 +6,12 @@ import ProductList from "../components/layout/ProductList";
 import Slider from "../components/layout/Slider";
 import SeoText from "../components/ui/SeoText";
 import ConsultModal from "../components/modals/ConsultModal";
+import { useGetProductsQuery } from "../store/api";
 
 function HomePage() {
   const [openConsult, setOpenConsult] = useState(false);
+
+  const { data: products } = useGetProductsQuery({});
 
   useEffect(() => {
     const wasShown = sessionStorage.getItem("consultShown");
@@ -30,7 +33,10 @@ function HomePage() {
       <ConsultModal open={openConsult} setOpen={setOpenConsult} />
       <Header />
       <Slider />
-      <Group title="Акции" children={<ProductList />} />
+      <Group
+        title="Новое"
+        children={<ProductList products={products || []} />}
+      />
       <Group
         children={
           <img

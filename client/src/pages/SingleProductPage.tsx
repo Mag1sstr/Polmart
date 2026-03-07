@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Footer from "../components/layout/Footer";
 import Group from "../components/layout/Group";
 import Header from "../components/layout/Header";
 import ModalWrapper from "../components/modals/ModalWrapper";
 import BuyProductModal from "../components/modals/BuyProductModal";
+import { useGetSingleProductQuery } from "../store/api";
+import { useParams } from "react-router-dom";
+import { getImage } from "../utils/getImage";
 
 const TABS = [
   {
@@ -61,6 +64,15 @@ const TABS = [
   },
 ];
 function SingleProductPage() {
+  const { productId } = useParams();
+  const { data: product } = useGetSingleProductQuery(productId!);
+  // const imagesUrl = useMemo(() => {
+  //   if (!product?.images) return null;
+  //   return product.images.map((image) => URL.createObjectURL(image));
+  // }, [product]);
+
+  console.log(product?.images);
+
   const [count, setCount] = useState(1);
   const [currentTab, setCurrentTab] = useState(TABS[0]);
   const [openModal, setOpenModal] = useState(false);
@@ -84,15 +96,13 @@ function SingleProductPage() {
       <Header />
       <section>
         <Group>
-          <h1 className="text-[2rem] my-5 font-bold">
-            SPC VöLKE PRO Stone TERRA YFS08
-          </h1>
+          <h1 className="text-[2rem] my-5 font-bold">{product?.title}</h1>
           <div className="flex gap-5 mb-5">
             <div className="max-w-165 w-full">
               <div className="w-full h-auto mb-5">
                 <img
                   className="w-full h-full"
-                  src="https://polmart.kz/upload/resize_cache/iblock/180/660_371_1/180c18146d8e33e325d048de4ca61410.jpg"
+                  src={getImage(product?.images[0]) ?? ""}
                   alt="main-img"
                 />
               </div>
