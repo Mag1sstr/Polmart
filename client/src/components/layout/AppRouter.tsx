@@ -7,6 +7,8 @@ import SingleProductPage from "../../pages/SingleProductPage";
 import AdminPage from "../../pages/AdminPage";
 import CatalogPage from "../../pages/CatalogPage";
 import CatalogProductsPage from "../../pages/CatalogProductsPage";
+import GalleryPage from "../../pages/GalleryPage";
+import NewsPage from "../../pages/NewsPage";
 
 function AppRouter() {
   return (
@@ -15,11 +17,16 @@ function AppRouter() {
       <Route path={ROUTES.CONTACTS} element={<ContactsPage />} />
       <Route path={ROUTES.ABOUT} element={<AboutPage />} />
       <Route path={ROUTES.CATALOG} element={<CatalogPage />} />
+      <Route path={ROUTES.GALERY} element={<GalleryPage />} />
+      <Route path={ROUTES.NEWS} element={<NewsPage />} />
       <Route
-        path={ROUTES.CATALOG_PRODUCTS(":id")}
+        path={ROUTES.CATALOG_PRODUCTS(":categorySlug")}
         element={<CatalogProductsPage />}
       />
-      <Route path="/catalog/:id/:productId" element={<SingleProductPage />} />
+      <Route
+        path="/catalog/:categorySlug/:productId"
+        element={<SingleProductPage />}
+      />
       <Route path={ROUTES.ADMIN} element={<AdminPage />} />
     </Routes>
   );

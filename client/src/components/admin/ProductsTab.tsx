@@ -15,7 +15,7 @@ interface IEdit extends ProductFormData {
 }
 
 function ProductsTab() {
-  const { data: products } = useGetProductsQuery();
+  const { data: products } = useGetProductsQuery({});
   const [createProduct] = useCreateProductMutation();
   const [updateProduct] = useUpdateProductMutation();
   const [deleteProduct] = useDeleteProductMutation();

@@ -10,14 +10,17 @@ import { useParams } from "react-router-dom";
 
 function CatalogProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
-  const { id } = useParams();
+  const { categorySlug } = useParams();
   const {
     data: products,
     isLoading,
     isError,
-  } = useGetProductsQuery({
-    categoryId: id,
-  });
+  } = useGetProductsQuery(
+    {
+      categorySlug: categorySlug,
+    },
+    { skip: !categorySlug },
+  );
   const pageSize = 6;
   const totalPages = products ? Math.ceil(products.length / pageSize) : 0;
 
@@ -36,6 +39,7 @@ function CatalogProductsPage() {
             </div>
           </div>
           <div className="flex-1 ">
+            {isError && <p>Что-то пошло не так</p>}
             <div className="grid grid-cols-3 gap-8.75">
               {products?.map((product) => (
                 <ProductCard key={product._id} {...product} />

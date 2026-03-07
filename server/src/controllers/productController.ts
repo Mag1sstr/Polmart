@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { Product } from "../models/Product";
+import { Category } from "../models/Category";
 
 export const getProducts = async (
   req: Request,
@@ -7,8 +8,17 @@ export const getProducts = async (
   next: NextFunction,
 ) => {
   try {
-    const { categoryId } = req.query;
-    const filter = categoryId ? { category: categoryId } : {};
+    const { categorySlug } = req.query as { categorySlug?: string };
+
+    let filter = {};
+
+    if (categorySlug) {
+      const category = await Category.findOne({ slug: categorySlug });
+
+      if (category) {
+        filter = { category: category._id };
+      }
+    }
     const products = await Product.find(filter).populate("category");
     res.json(products);
   } catch (err) {
