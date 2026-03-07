@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../utils/routes";
 import type { Product } from "../../store/api";
+import { getImage } from "../../utils/getImage";
 
 interface IProps extends Product {}
 
@@ -14,7 +15,7 @@ function ProductCard({ _id, category, images, price, title, isNew }: IProps) {
           </div>
           <img
             className="w-full h-full object-cover"
-            src="https://polmart.kz/upload/resize_cache/iblock/a8a/310_232_2/a8a4548302f23e00a88e96c42f192b23.jpg"
+            src={getImage(images[0]) ?? ""}
             alt="image"
           />
         </div>

@@ -66,12 +66,6 @@ const TABS = [
 function SingleProductPage() {
   const { productId } = useParams();
   const { data: product } = useGetSingleProductQuery(productId!);
-  // const imagesUrl = useMemo(() => {
-  //   if (!product?.images) return null;
-  //   return product.images.map((image) => URL.createObjectURL(image));
-  // }, [product]);
-
-  console.log(product?.images);
 
   const [count, setCount] = useState(1);
   const [currentTab, setCurrentTab] = useState(TABS[0]);
@@ -88,7 +82,6 @@ function SingleProductPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-  //
   return (
     <>
       <BuyProductModal open={openModal} setOpen={setOpenModal} />
@@ -107,41 +100,29 @@ function SingleProductPage() {
                 />
               </div>
               <div className="flex w-full gap-1">
-                <img
-                  className="max-w-41.25 w-full h-[92px]"
-                  src="https://polmart.kz/upload/resize_cache/iblock/180/660_371_1/180c18146d8e33e325d048de4ca61410.jpg"
-                  alt="main-img"
-                />
-                <img
-                  className="max-w-41.25 w-full h-[92px]"
-                  src="https://polmart.kz/upload/resize_cache/iblock/180/660_371_1/180c18146d8e33e325d048de4ca61410.jpg"
-                  alt="main-img"
-                />
-                <img
-                  className="max-w-41.25 w-full h-[92px]"
-                  src="https://polmart.kz/upload/resize_cache/iblock/180/660_371_1/180c18146d8e33e325d048de4ca61410.jpg"
-                  alt="main-img"
-                />
-                <img
-                  className="max-w-41.25 w-full h-[92px]"
-                  src="https://polmart.kz/upload/resize_cache/iblock/180/660_371_1/180c18146d8e33e325d048de4ca61410.jpg"
-                  alt="main-img"
-                />
+                {product?.images.map((image) => (
+                  <img
+                    key={String(image)}
+                    className="max-w-41.25 w-full h-[92px]"
+                    src={getImage(image) ?? ""}
+                    alt="main-img"
+                  />
+                ))}
               </div>
             </div>
             <div className="flex-1">
               <ul className="flex flex-col gap-1.25 text-[17.2px] mb-5">
                 <li>
                   <b>Производитель: </b>
-                  VöLKE
+                  {product?.manufacturer || "Нет"}
                 </li>
                 <li>
                   <b>Коллекция: </b>
-                  VÖLKE PRO STONE
+                  {product?.collection || "Нет"}
                 </li>
                 <li>
                   <b>Страна: </b>
-                  Швеция
+                  {product?.country || "Нет"}
                 </li>
               </ul>
 
@@ -170,10 +151,22 @@ function SingleProductPage() {
                 </div>
 
                 <div className="flex flex-col text-[37px] montserrat">
-                  <p>
-                    <s>12500</s> тг/м²
-                  </p>
-                  <p>10625 тг/м²</p>
+                  {product?.discount && product?.discount > 0 ? (
+                    <>
+                      <p>
+                        <s>{product.price}</s> тг/м²
+                      </p>
+                      <p>
+                        {product?.price -
+                          (product.price * product.discount) / 100}{" "}
+                        тг/м²
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <p>{product?.price} тг/м²</p>
+                    </>
+                  )}
                 </div>
               </div>
               <button onClick={() => setOpenModal(true)}>купить</button>
