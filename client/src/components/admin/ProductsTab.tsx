@@ -121,11 +121,11 @@ function ProductsTab() {
             value={form.description}
             onChange={(v) => handleChange("description", v)}
           />
-          {/* <Input
+          <Input
             label="Категория *"
-            value={form.category || ""}
+            value={form.category.slug || ""}
             onChange={(v) => handleChange("category", v)}
-          /> */}
+          />
           <Input
             label="Страна"
             value={form.country || ""}

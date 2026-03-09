@@ -15,19 +15,16 @@ function CatalogProductsPage() {
   const {
     data: products,
     isLoading,
-    isError,
     isSuccess,
     status,
   } = useGetProductsQuery(
     {
-      categorySlug: categorySlug,
+      category: categorySlug,
     },
-    { skip: !categorySlug },
+    { skip: !categorySlug, refetchOnMountOrArgChange: true },
   );
   const pageSize = 6;
   const totalPages = products ? Math.ceil(products.length / pageSize) : 0;
-
-  console.log(status);
 
   return (
     <>

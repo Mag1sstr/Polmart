@@ -21,7 +21,7 @@ function AppRouter() {
       <Route path={ROUTES.NEWS} element={<NewsPage />} />
       <Route
         path={ROUTES.CATALOG_PRODUCTS(":categorySlug")}
-        element={<CatalogProductsPage />}
+        element={<CatalogProductsPage key={location.pathname} />}
       />
       <Route
         path="/catalog/:categorySlug/:productId"

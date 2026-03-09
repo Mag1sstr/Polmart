@@ -66,7 +66,7 @@ export const api = createApi({
       }),
     }),
 
-    getProducts: builder.query<Product[], { categorySlug?: string }>({
+    getProducts: builder.query<Product[], { category?: string }>({
       query: (params) => ({
         url: "/products",
         params,

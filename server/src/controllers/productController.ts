@@ -8,18 +8,24 @@ export const getProducts = async (
   next: NextFunction,
 ) => {
   try {
-    const { categorySlug } = req.query as { categorySlug?: string };
+    const { category } = req.query;
 
-    let filter = {};
+    let filter: any = {};
 
-    if (categorySlug) {
-      const category = await Category.findOne({ slug: categorySlug });
+    if (category) {
+      const categoryDoc = await Category.findOne({
+        slug: category,
+      });
 
-      if (category) {
-        filter = { category: category._id };
+      if (!categoryDoc) {
+        return res.json([]);
       }
+
+      filter.category = categoryDoc._id;
     }
+
     const products = await Product.find(filter).populate("category");
+
     res.json(products);
   } catch (err) {
     next(err);
