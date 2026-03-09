@@ -8,6 +8,7 @@ import Breadcrumbs from "../components/layout/Breadcrumbs";
 import { useGetProductsQuery } from "../store/api";
 import { data, useParams } from "react-router-dom";
 import Loader from "../components/ui/Loader";
+import Skeleton from "../components/ui/Skeleton";
 
 function CatalogProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -16,7 +17,6 @@ function CatalogProductsPage() {
     data: products,
     isLoading,
     isSuccess,
-    status,
   } = useGetProductsQuery(
     {
       category: categorySlug,
@@ -41,18 +41,15 @@ function CatalogProductsPage() {
             </div>
           </div>
           <div className="flex-1 ">
-            {isLoading && <Loader />}
+            {isLoading && <Skeleton />}
             {isSuccess && !products.length && (
               <p>Нет продуктов этой категории.</p>
             )}
+
             <div className="grid grid-cols-3 gap-8.75">
               {products?.map((product) => (
                 <ProductCard key={product._id} {...product} />
               ))}
-              {/* <ProductCard />
-              <ProductCard />
-              <ProductCard />
-              <ProductCard /> */}
             </div>
             <Pagination
               totalPages={totalPages}

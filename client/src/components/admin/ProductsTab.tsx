@@ -2,6 +2,7 @@ import { useState, type ChangeEvent } from "react";
 import {
   useCreateProductMutation,
   useDeleteProductMutation,
+  useGetCategoriesQuery,
   useGetProductsQuery,
   useUpdateProductMutation,
   type Product,
@@ -19,6 +20,8 @@ function ProductsTab() {
   const [createProduct] = useCreateProductMutation();
   const [updateProduct] = useUpdateProductMutation();
   const [deleteProduct] = useDeleteProductMutation();
+
+  const { data: categories } = useGetCategoriesQuery();
 
   const emptyProduct: ProductFormData = {
     title: "",
@@ -81,7 +84,10 @@ function ProductsTab() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const formData = objectToFormData<ProductFormData>(form);
+    const formData = objectToFormData({
+      ...form,
+      category: form.category._id,
+    });
 
     if (editingId) {
       await updateProduct({ id: editingId, data: form }).unwrap();
@@ -89,6 +95,7 @@ function ProductsTab() {
       await createProduct(formData).unwrap();
     }
     setForm(emptyProduct);
+    setPreview(null);
     setEditingId(null);
   };
 
@@ -98,6 +105,8 @@ function ProductsTab() {
     setForm(rest);
     setEditingId(p._id);
   };
+
+  console.log(form);
 
   return (
     <div className="bg-white border rounded-b p-4 space-y-6">
@@ -121,15 +130,17 @@ function ProductsTab() {
             value={form.description}
             onChange={(v) => handleChange("description", v)}
           />
-          <Input
-            label="Категория *"
-            value={form.category.slug || ""}
-            onChange={(v) => handleChange("category", v)}
-          />
+
           <Input
             label="Страна"
             value={form.country || ""}
             onChange={(v) => handleChange("country", v)}
+          />
+          <Input
+            label="Скидка"
+            value={form.discount || 0}
+            type="number"
+            onChange={(v) => handleChange("discount", v)}
           />
           <Input
             label="Класс"
@@ -232,6 +243,27 @@ function ProductsTab() {
             ))}
         </div>
         <div className="col-span-2 flex gap-2 mt-2">
+          <select
+            onChange={(e) =>
+              setForm((prev) => ({
+                ...prev,
+                category: {
+                  ...prev.category,
+                  _id: e.target.value,
+                },
+              }))
+            }
+            className="px-4 py-2 border border-(--prime) rounded "
+          >
+            <option className="" value="">
+              Выбрать категорию *
+            </option>
+            {categories?.map((cat) => (
+              <option key={cat._id} value={cat._id}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
           <input
             onChange={handleImage}
             className="hidden"

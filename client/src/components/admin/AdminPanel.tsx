@@ -18,7 +18,7 @@ function AdminPanel() {
       <header className="bg-black text-white py-4 px-6 flex items-center justify-between">
         <h1 className="text-xl font-semibold">Админ-панель</h1>
         <button
-          className="border px-3 py-1 rounded hover:bg-white hover:text-black transition"
+          className="border px-3 py-1 rounded hover:bg-white hover:text-black transition cursor-pointer"
           onClick={() => dispatch(logout())}
         >
           Выйти

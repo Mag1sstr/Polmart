@@ -1,75 +1,56 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "../components/layout/Footer";
 import Group from "../components/layout/Group";
 import Header from "../components/layout/Header";
-import ModalWrapper from "../components/modals/ModalWrapper";
 import BuyProductModal from "../components/modals/BuyProductModal";
 import { useGetSingleProductQuery } from "../store/api";
 import { useParams } from "react-router-dom";
 import { getImage } from "../utils/getImage";
 
-const TABS = [
-  {
-    name: "Описание",
-    content: (
-      <div>
-        <p>
-          Ламинат VöLKE Herringbone, в коллекции Grand Wood Luxe <br />
-          это 48 часов влагостойкости, супер плотная плита HDF Ultra и 10
-          вариантов сборки! <br /> <br />
-          Елочка VöLKE обеспечивает новую интерпретацию классики и придает ей
-          современный и инновационный вид. Вневременные конструкции дерева
-          дополняются модифицированной проверенной ранее системой универсального
-          монтажа UNICLIK Belgium. <br /> <br />
-          Откройте для себя преимущества использования высококачественного
-          влагостойкого ламината с уникальной коллекцией Grand Wood Luxe.
-          Толщина 12 мм делает его чрезвычайно стабильным и прочным. Он также
-          может использоваться с теплым полом и позволит вам наслаждаться
-          приятным на ощупь теплым покрытием. На комфорт пользователя также
-          влияет синхронная структура, с четко видимым и ощутимым расположением
-          рисунка. <br /> <br />
-          Влагостойкий ламинат VöLKE Herringbone доступен в нескольких декорах.
-          Они напоминают натуральное дерево светлых и темных оттенков
-          коричневого и нежно отбеленных серых. Отдельные доски заметно
-          отличаются друг от друга, поэтому пол выглядит естественно. Это стало
-          возможным благодаря дополнительной пропиткой краев и защитой
-          V-образной фаской. <br /> <br />
-          From Sweden with love!
-        </p>
-      </div>
-    ),
-  },
-  {
-    name: "Характеристики",
-    content: (
-      <div>
-        <p>
-          Откройте для себя преимущества использования высококачественного
-          влагостойкого ламината с уникальной коллекцией Grand Wood Luxe.
-          Толщина 12 мм делает его чрезвычайно стабильным и прочным. Он также
-          может использоваться с теплым полом и позволит вам наслаждаться
-          приятным на ощупь теплым покрытием. На комфорт пользователя также
-          влияет синхронная структура, с четко видимым и ощутимым расположением
-          рисунка. <br /> <br />
-          Влагостойкий ламинат VöLKE Herringbone доступен в нескольких декорах.
-          Они напоминают натуральное дерево светлых и темных оттенков
-          коричневого и нежно отбеленных серых. Отдельные доски заметно
-          отличаются друг от друга, поэтому пол выглядит естественно. Это стало
-          возможным благодаря дополнительной пропиткой краев и защитой
-          V-образной фаской. <br /> <br />
-          From Sweden with love!
-        </p>
-      </div>
-    ),
-  },
-];
+const TABS = ["Описание", "Характеристики"];
+
 function SingleProductPage() {
   const { productId } = useParams();
   const { data: product } = useGetSingleProductQuery(productId!);
 
+  // const TABS = [
+  //   {
+  //     name: "Описание",
+  //     content: (
+  //       <div>
+  //         <p>{product?.description}</p>
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     name: "Характеристики",
+  //     content: (
+  //       <div>
+  //         <p>
+  //           Откройте для себя преимущества использования высококачественного
+  //           влагостойкого ламината с уникальной коллекцией Grand Wood Luxe.
+  //           Толщина 12 мм делает его чрезвычайно стабильным и прочным. Он также
+  //           может использоваться с теплым полом и позволит вам наслаждаться
+  //           приятным на ощупь теплым покрытием. На комфорт пользователя также
+  //           влияет синхронная структура, с четко видимым и ощутимым
+  //           расположением рисунка. <br /> <br />
+  //           Влагостойкий ламинат VöLKE Herringbone доступен в нескольких
+  //           декорах. Они напоминают натуральное дерево светлых и темных оттенков
+  //           коричневого и нежно отбеленных серых. Отдельные доски заметно
+  //           отличаются друг от друга, поэтому пол выглядит естественно. Это
+  //           стало возможным благодаря дополнительной пропиткой краев и защитой
+  //           V-образной фаской. <br /> <br />
+  //           From Sweden with love!
+  //         </p>
+  //       </div>
+  //     ),
+  //   },
+  // ];
+
   const [count, setCount] = useState(1);
   const [currentTab, setCurrentTab] = useState(TABS[0]);
   const [openModal, setOpenModal] = useState(false);
+  const [currentImg, setCurrentImg] = useState(0);
 
   const handleInc = () => {
     setCount((prev) => prev + 1);
@@ -78,6 +59,7 @@ function SingleProductPage() {
     if (count <= 1) return;
     setCount((prev) => prev - 1);
   };
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
@@ -95,15 +77,16 @@ function SingleProductPage() {
               <div className="w-full h-auto mb-5">
                 <img
                   className="w-full h-full"
-                  src={getImage(product?.images[0]) ?? ""}
+                  src={getImage(product?.images[currentImg]) ?? ""}
                   alt="main-img"
                 />
               </div>
               <div className="flex w-full gap-1">
-                {product?.images.map((image) => (
+                {product?.images.map((image, index) => (
                   <img
+                    onClick={() => setCurrentImg(index)}
                     key={String(image)}
-                    className="max-w-41.25 w-full h-[92px]"
+                    className={`max-w-41.25 w-full h-[92px] cursor-pointer border-3 ${currentImg === index ? "border-(--prime)" : "border-transparent"}`}
                     src={getImage(image) ?? ""}
                     alt="main-img"
                   />
@@ -176,15 +159,36 @@ function SingleProductPage() {
           <div className="flex border-b-3 border-[#73b211] ">
             {TABS.map((tab) => (
               <div
-                key={tab.name}
+                key={tab}
                 onClick={() => setCurrentTab(tab)}
-                className={`py-2 px-4 bg-[#ececec] cursor-pointer ${currentTab.name === tab.name && "text-white bg-[#73b211]!"}`}
+                className={`py-2 px-4 bg-[#ececec] cursor-pointer ${currentTab === tab && "text-white bg-[#73b211]!"}`}
               >
-                {tab.name}
+                {tab}
               </div>
             ))}
           </div>
-          <div className="py-7.5">{currentTab.content}</div>
+
+          <div className="py-7.5">
+            {currentTab === "Описание" && <div>{product?.description}</div>}
+            {currentTab === "Характеристики" && (
+              <div>
+                Откройте для себя преимущества использования высококачественного
+                влагостойкого ламината с уникальной коллекцией Grand Wood Luxe.
+                Толщина 12 мм делает его чрезвычайно стабильным и прочным. Он
+                также может использоваться с теплым полом и позволит вам
+                наслаждаться приятным на ощупь теплым покрытием. На комфорт
+                пользователя также влияет синхронная структура, с четко видимым
+                и ощутимым расположением рисунка. <br /> <br />
+                Влагостойкий ламинат VöLKE Herringbone доступен в нескольких
+                декорах. Они напоминают натуральное дерево светлых и темных
+                оттенков коричневого и нежно отбеленных серых. Отдельные доски
+                заметно отличаются друг от друга, поэтому пол выглядит
+                естественно. Это стало возможным благодаря дополнительной
+                пропиткой краев и защитой V-образной фаской. <br /> <br />
+                From Sweden with love!
+              </div>
+            )}
+          </div>
         </Group>
       </section>
       <Footer />
