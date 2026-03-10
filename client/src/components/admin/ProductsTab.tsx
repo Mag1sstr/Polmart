@@ -304,7 +304,7 @@ function ProductsTab() {
           <table className="min-w-full text-sm border">
             <thead className="bg-slate-100">
               <tr>
-                <th className="border px-2 py-1">Название (рисунок)</th>
+                <th className="border px-2 py-1">Название </th>
                 <th className="border px-2 py-1">Цена</th>
                 <th className="border px-2 py-1">Класс</th>
                 <th className="border px-2 py-1">Размер</th>
@@ -314,7 +314,7 @@ function ProductsTab() {
             <tbody>
               {products?.map((p) => (
                 <tr key={p._id}>
-                  <td className="border px-2 py-1">{p.pattern}</td>
+                  <td className="border px-2 py-1">{p.title}</td>
                   <td className="border px-2 py-1">{p.price}</td>
                   <td className="border px-2 py-1">{p.class}</td>
                   <td className="border px-2 py-1">{p.size}</td>

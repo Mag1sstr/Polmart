@@ -6,46 +6,15 @@ import BuyProductModal from "../components/modals/BuyProductModal";
 import { useGetSingleProductQuery } from "../store/api";
 import { useParams } from "react-router-dom";
 import { getImage } from "../utils/getImage";
+import { useAppDispatch } from "../hooks";
+import { setSelectProduct } from "../store/selectProductSlice";
 
 const TABS = ["Описание", "Характеристики"];
 
 function SingleProductPage() {
+  const dispatch = useAppDispatch();
   const { productId } = useParams();
   const { data: product } = useGetSingleProductQuery(productId!);
-
-  // const TABS = [
-  //   {
-  //     name: "Описание",
-  //     content: (
-  //       <div>
-  //         <p>{product?.description}</p>
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     name: "Характеристики",
-  //     content: (
-  //       <div>
-  //         <p>
-  //           Откройте для себя преимущества использования высококачественного
-  //           влагостойкого ламината с уникальной коллекцией Grand Wood Luxe.
-  //           Толщина 12 мм делает его чрезвычайно стабильным и прочным. Он также
-  //           может использоваться с теплым полом и позволит вам наслаждаться
-  //           приятным на ощупь теплым покрытием. На комфорт пользователя также
-  //           влияет синхронная структура, с четко видимым и ощутимым
-  //           расположением рисунка. <br /> <br />
-  //           Влагостойкий ламинат VöLKE Herringbone доступен в нескольких
-  //           декорах. Они напоминают натуральное дерево светлых и темных оттенков
-  //           коричневого и нежно отбеленных серых. Отдельные доски заметно
-  //           отличаются друг от друга, поэтому пол выглядит естественно. Это
-  //           стало возможным благодаря дополнительной пропиткой краев и защитой
-  //           V-образной фаской. <br /> <br />
-  //           From Sweden with love!
-  //         </p>
-  //       </div>
-  //     ),
-  //   },
-  // ];
 
   const [count, setCount] = useState(1);
   const [currentTab, setCurrentTab] = useState(TABS[0]);
@@ -60,13 +29,19 @@ function SingleProductPage() {
     setCount((prev) => prev - 1);
   };
 
+  const handleBuy = () => {
+    if (!product) return;
+    setOpenModal(true);
+    dispatch(setSelectProduct(product));
+  };
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
   return (
     <>
-      <BuyProductModal open={openModal} setOpen={setOpenModal} />
+      <BuyProductModal open={openModal} setOpen={setOpenModal} count={count} />
 
       <Header />
       <section>
@@ -74,7 +49,7 @@ function SingleProductPage() {
           <h1 className="text-[2rem] my-5 font-bold">{product?.title}</h1>
           <div className="flex gap-5 mb-5">
             <div className="max-w-165 w-full">
-              <div className="w-full h-auto mb-5">
+              <div className="w-full h-auto mb-5 overflow-hidden">
                 <img
                   className="w-full h-full"
                   src={getImage(product?.images[currentImg]) ?? ""}
@@ -152,7 +127,12 @@ function SingleProductPage() {
                   )}
                 </div>
               </div>
-              <button onClick={() => setOpenModal(true)}>купить</button>
+              <button
+                onClick={handleBuy}
+                className="px-4 py-2 bg-(--prime) text-white rounded my-5 cursor-pointer"
+              >
+                Купить
+              </button>
             </div>
           </div>
 
