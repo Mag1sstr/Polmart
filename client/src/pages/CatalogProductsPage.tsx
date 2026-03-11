@@ -29,7 +29,7 @@ function CatalogProductsPage() {
   return (
     <>
       <Header />
-      <Breadcrumbs />
+      <Breadcrumbs sort />
       <Group>
         <h1 className="py-5 text-[2rem] font-bold">Ламинат</h1>
 
