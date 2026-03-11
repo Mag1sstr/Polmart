@@ -7,7 +7,7 @@ export interface Product {
   _id: string;
   title: string;
   description: string;
-  discount?: number;
+  discount: number;
   price: number;
   class?: number;
   thickness?: number;
