@@ -5,7 +5,15 @@ import { getImage } from "../../utils/getImage";
 
 interface IProps extends Product {}
 
-function ProductCard({ _id, category, images, price, title, isNew }: IProps) {
+function ProductCard({
+  _id,
+  category,
+  images,
+  price,
+  title,
+  isNew,
+  discount,
+}: IProps) {
   return (
     <article className="flex  flex-col rounded-[5px] overflow-hidden shadow-[0_0_10px_rgba(0,0,0,0.25)] bg-white">
       <Link to={`/catalog/${category?.slug}/${_id}`}>
@@ -40,13 +48,13 @@ function ProductCard({ _id, category, images, price, title, isNew }: IProps) {
             Швеция
           </li>
           <li>
-            <b>Цена за:</b>
-            тг/м²
+            <b>Скидка:</b>
+            {discount === 0 ? "Нет" : `${discount}%`}
           </li>
         </ul>
-        <p className="mb-5 text-[18px] montserrat">{price} тг/м²</p>
-        <Link to={`/catalog/${category?.slug}/${_id}`}>
-          <button className="w-full transition-all cursor-pointer mt-auto text-(--prime) border border-(--prime) text-[15px] leading-5 h-10 hover:text-white hover:bg-(--prime)">
+        <p className="mb-5  text-[18px] montserrat">{price} тг/м²</p>
+        <Link className="mt-auto" to={`/catalog/${category?.slug}/${_id}`}>
+          <button className="w-full transition-all cursor-pointer  text-(--prime) border border-(--prime) text-[15px] leading-5 h-10 hover:text-white hover:bg-(--prime)">
             Подробнее
           </button>
         </Link>
