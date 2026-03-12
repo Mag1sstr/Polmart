@@ -11,7 +11,9 @@ import { useGetProductsQuery } from "../store/api";
 function HomePage() {
   const [openConsult, setOpenConsult] = useState(false);
 
-  const { data: products } = useGetProductsQuery({});
+  const { data } = useGetProductsQuery({
+    size: 4,
+  });
 
   useEffect(() => {
     const wasShown = sessionStorage.getItem("consultShown");
@@ -33,10 +35,7 @@ function HomePage() {
       <ConsultModal open={openConsult} setOpen={setOpenConsult} />
       <Header />
       <Slider />
-      <Group
-        title="Новое"
-        children={<ProductList products={products || []} />}
-      />
+      <Group title="Новое" children={<ProductList data={data} />} />
       <Group
         children={
           <img

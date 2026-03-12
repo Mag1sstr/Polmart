@@ -2,31 +2,103 @@ import { Request, Response, NextFunction } from "express";
 import { Product } from "../models/Product";
 import { Category } from "../models/Category";
 
+// export const getProducts = async (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction,
+// ) => {
+//   try {
+//     const { category } = req.query;
+
+//     let filter: any = {};
+
+//     if (category) {
+//       const categoryDoc = await Category.findOne({
+//         slug: category,
+//       });
+
+//       if (!categoryDoc) {
+//         return res.json([]);
+//       }
+
+//       filter.category = categoryDoc._id;
+//     }
+
+//     const products = await Product.find(filter).populate("category");
+
+//     res.json(products);
+//   } catch (err) {
+//     next(err);
+//   }
+// };
 export const getProducts = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
-    const { category } = req.query;
+    const {
+      category,
+      title,
+      min_price,
+      max_price,
+      page = 1,
+      size = 10,
+    } = req.query;
 
-    let filter: any = {};
+    const filter: any = {};
 
     if (category) {
-      const categoryDoc = await Category.findOne({
-        slug: category,
-      });
+      const categoryDoc = await Category.findOne({ slug: category });
 
       if (!categoryDoc) {
-        return res.json([]);
+        return res.json({
+          products: [],
+          totalPages: 0,
+          totalProducts: 0,
+        });
       }
 
       filter.category = categoryDoc._id;
     }
 
-    const products = await Product.find(filter).populate("category");
+    if (title) {
+      filter.title = { $regex: title, $options: "i" };
+    }
 
-    res.json(products);
+    if (min_price || max_price) {
+      filter.price = {};
+
+      if (min_price) {
+        filter.price.$gte = Number(min_price);
+      }
+
+      if (max_price) {
+        filter.price.$lte = Number(max_price);
+      }
+    }
+
+    const pageNumber = Number(page);
+    const pageSize = Number(size);
+
+    const skip = (pageNumber - 1) * pageSize;
+
+    const totalProducts = await Product.countDocuments(filter);
+
+    const totalPages = Math.ceil(totalProducts / pageSize);
+
+    const products = await Product.find(filter)
+      .populate("category")
+      .skip(skip)
+      .limit(pageSize)
+      .sort({ createdAt: -1 });
+
+    res.json({
+      products,
+      totalPages,
+      totalProducts,
+      currentPage: pageNumber,
+    });
   } catch (err) {
     next(err);
   }

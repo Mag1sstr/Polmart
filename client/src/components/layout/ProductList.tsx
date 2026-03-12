@@ -1,14 +1,14 @@
-import type { Product } from "../../store/api";
+import type { IProductResponse, Product } from "../../store/api";
 import ProductCard from "../ui/ProductCard";
 
 interface IProps {
-  products: Product[];
+  data?: IProductResponse;
 }
 
-function ProductList({ products }: IProps) {
+function ProductList({ data }: IProps) {
   return (
     <div className="grid grid-cols-4 gap-8.75">
-      {products?.map((product) => (
+      {data?.products?.map((product) => (
         <ProductCard key={product._id} {...product} />
       ))}
     </div>

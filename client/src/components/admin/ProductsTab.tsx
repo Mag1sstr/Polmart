@@ -16,7 +16,7 @@ interface IEdit extends ProductFormData {
 }
 
 function ProductsTab() {
-  const { data: products } = useGetProductsQuery({});
+  const { data } = useGetProductsQuery({});
   const [createProduct] = useCreateProductMutation();
   const [updateProduct] = useUpdateProductMutation();
   const [deleteProduct] = useDeleteProductMutation();
@@ -306,18 +306,14 @@ function ProductsTab() {
               <tr>
                 <th className="border px-2 py-1">Название </th>
                 <th className="border px-2 py-1">Цена</th>
-                <th className="border px-2 py-1">Класс</th>
-                <th className="border px-2 py-1">Размер</th>
                 <th className="border px-2 py-1">Действия</th>
               </tr>
             </thead>
             <tbody>
-              {products?.map((p) => (
+              {data?.products?.map((p) => (
                 <tr key={p._id}>
                   <td className="border px-2 py-1">{p.title}</td>
                   <td className="border px-2 py-1">{p.price}</td>
-                  <td className="border px-2 py-1">{p.class}</td>
-                  <td className="border px-2 py-1">{p.size}</td>
                   <td className="border px-2 py-1 space-x-2">
                     <button
                       className="text-blue-600"

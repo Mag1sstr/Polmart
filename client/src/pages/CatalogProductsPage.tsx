@@ -16,7 +16,7 @@ function CatalogProductsPage() {
   const { categorySlug } = useParams();
   const { sortType } = useAppSelector((state) => state.filters);
   const {
-    data: products = [],
+    data = { products: [] },
     isLoading,
     isSuccess,
   } = useGetProductsQuery(
@@ -26,10 +26,12 @@ function CatalogProductsPage() {
     { skip: !categorySlug, refetchOnMountOrArgChange: true },
   );
   const pageSize = 6;
-  const totalPages = products ? Math.ceil(products.length / pageSize) : 0;
+  const totalPages = data.products
+    ? Math.ceil(data.products.length / pageSize)
+    : 0;
 
   const filteredProducts = sortType
-    ? [...products].sort((a, b) => {
+    ? [...data.products].sort((a, b) => {
         switch (sortType) {
           case "asc":
             return a.price - b.price;
@@ -45,7 +47,7 @@ function CatalogProductsPage() {
             return a.price - b.price;
         }
       })
-    : products;
+    : data.products;
 
   return (
     <>
@@ -63,7 +65,7 @@ function CatalogProductsPage() {
           </div>
           <div className="flex-1 ">
             {isLoading && <Skeleton />}
-            {isSuccess && !products.length && (
+            {isSuccess && !data.products.length && (
               <p>Нет продуктов этой категории.</p>
             )}
 

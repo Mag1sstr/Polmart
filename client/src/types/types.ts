@@ -7,3 +7,11 @@ export interface IModalOpen {
 export type ProductFormData = Omit<Product, "_id"> & {
   images: File[];
 };
+export interface IProductParams {
+  category?: string;
+  title?: string;
+  page?: number;
+  size?: number;
+  min_price?: number;
+  max_price?: number;
+}

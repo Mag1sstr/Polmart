@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { ProductFormData } from "../types/types";
+import type { IProductParams, ProductFormData } from "../types/types";
 
 const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
@@ -26,6 +26,12 @@ export interface Product {
   areaM2?: number;
   category: Category;
   images: File[];
+}
+export interface IProductResponse {
+  products: Product[];
+  totalPages: number;
+  totalProducts: number;
+  currentPage: number;
 }
 
 export interface Category {
@@ -66,7 +72,7 @@ export const api = createApi({
       }),
     }),
 
-    getProducts: builder.query<Product[], { category?: string }>({
+    getProducts: builder.query<IProductResponse, IProductParams>({
       query: (params) => ({
         url: "/products",
         params,
