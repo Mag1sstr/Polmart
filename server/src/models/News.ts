@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface INews extends Document {
-  img: string;
+  images: string[];
   publishedAt: Date;
   title: string;
   text: string;
@@ -11,13 +11,12 @@ export interface INews extends Document {
 
 const NewsSchema = new Schema<INews>(
   {
-    img: { type: String, required: true },
+    images: [String],
     publishedAt: { type: Date, required: true },
     title: { type: String, required: true },
-    text: { type: String, required: true }
+    text: { type: String, required: true },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 export const News = mongoose.model<INews>("News", NewsSchema);
-

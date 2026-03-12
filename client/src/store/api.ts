@@ -43,7 +43,7 @@ export interface Category {
 
 export interface NewsItem {
   _id: string;
-  img: string;
+  images: File[];
   publishedAt: string;
   title: string;
   text: string;
@@ -146,7 +146,7 @@ export const api = createApi({
       query: () => "/news",
       providesTags: ["News"],
     }),
-    createNews: builder.mutation<NewsItem, Omit<NewsItem, "_id">>({
+    createNews: builder.mutation<NewsItem, FormData>({
       query: (body) => ({
         url: "/news",
         method: "POST",

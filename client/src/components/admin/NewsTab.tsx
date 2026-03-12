@@ -7,6 +7,7 @@ import {
   type NewsItem,
 } from "../../store/api";
 import Input from "../ui/Input";
+import { objectToFormData } from "../../utils/objectToFormData";
 
 function NewsTab() {
   const { data: news } = useGetNewsQuery();
@@ -15,7 +16,7 @@ function NewsTab() {
   const [deleteNews] = useDeleteNewsMutation();
 
   const empty: Omit<NewsItem, "_id"> = {
-    img: "",
+    images: [],
     publishedAt: new Date().toISOString().slice(0, 10),
     title: "",
     text: "",
@@ -29,13 +30,16 @@ function NewsTab() {
     if (!files) return;
     const arrayImg = Array.from(files);
     setPreview(arrayImg.map((img) => URL.createObjectURL(img)));
+    setForm((prev) => ({ ...prev, images: arrayImg }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const formData = objectToFormData(form);
+
     await (editingId
       ? updateNews({ id: editingId, data: form }).unwrap()
-      : createNews(form).unwrap());
+      : createNews(formData).unwrap());
     setForm(empty);
     setEditingId(null);
   };

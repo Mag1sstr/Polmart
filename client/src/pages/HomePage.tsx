@@ -7,11 +7,12 @@ import Slider from "../components/layout/Slider";
 import SeoText from "../components/ui/SeoText";
 import ConsultModal from "../components/modals/ConsultModal";
 import { useGetProductsQuery } from "../store/api";
+import Skeleton from "../components/ui/Skeleton";
 
 function HomePage() {
   const [openConsult, setOpenConsult] = useState(false);
 
-  const { data } = useGetProductsQuery({
+  const { data, isLoading } = useGetProductsQuery({
     size: 4,
   });
 
@@ -35,7 +36,10 @@ function HomePage() {
       <ConsultModal open={openConsult} setOpen={setOpenConsult} />
       <Header />
       <Slider />
-      <Group title="Новое" children={<ProductList data={data} />} />
+      <Group title="Новое">
+        {isLoading && <Skeleton count={4} cols={4} />}
+        {!!data && <ProductList data={data} />}
+      </Group>
       <Group
         children={
           <img

@@ -10,25 +10,25 @@ import { data, useParams } from "react-router-dom";
 import Loader from "../components/ui/Loader";
 import Skeleton from "../components/ui/Skeleton";
 import { useAppSelector } from "../hooks";
+const pageSize = 6;
 
 function CatalogProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const { categorySlug } = useParams();
   const { sortType } = useAppSelector((state) => state.filters);
   const {
-    data = { products: [] },
+    data = { products: [], totalPages: 0, totalProducts: 0, currentPage: 1 },
     isLoading,
     isSuccess,
   } = useGetProductsQuery(
     {
       category: categorySlug,
+      page: currentPage,
+      size: 6,
     },
     { skip: !categorySlug, refetchOnMountOrArgChange: true },
   );
-  const pageSize = 6;
-  const totalPages = data.products
-    ? Math.ceil(data.products.length / pageSize)
-    : 0;
+  const totalPages = data?.totalPages;
 
   const filteredProducts = sortType
     ? [...data.products].sort((a, b) => {
@@ -75,7 +75,7 @@ function CatalogProductsPage() {
               ))}
             </div>
             <Pagination
-              totalPages={totalPages}
+              totalPages={totalPages || 0}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
             />
