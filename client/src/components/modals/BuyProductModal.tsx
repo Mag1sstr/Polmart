@@ -20,7 +20,10 @@ function BuyProductModal(props: IProps) {
         </p>
         <p className="mb-4">
           <b>Цена: </b>
-          {product && product?.price * props.count} тг
+          {product &&
+            (product?.price - (product.price * product.discount) / 100) *
+              props.count}
+          тг
         </p>
 
         <div className="w-full flex flex-col gap-3.75">
