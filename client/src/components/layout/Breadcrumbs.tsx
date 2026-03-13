@@ -11,6 +11,7 @@ const breadcrumbsNames: Record<string, string> = {
   contacts: "Контакты",
   laminate: "Ламинат",
   parquet: "Паркет",
+  search: "Поиск",
 };
 
 interface IProps {

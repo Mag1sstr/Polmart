@@ -9,6 +9,7 @@ import CatalogPage from "../../pages/CatalogPage";
 import CatalogProductsPage from "../../pages/CatalogProductsPage";
 import GalleryPage from "../../pages/GalleryPage";
 import NewsPage from "../../pages/NewsPage";
+import SearchPage from "../../pages/SearchPage";
 
 function AppRouter() {
   return (
@@ -19,6 +20,8 @@ function AppRouter() {
       <Route path={ROUTES.CATALOG} element={<CatalogPage />} />
       <Route path={ROUTES.GALERY} element={<GalleryPage />} />
       <Route path={ROUTES.NEWS} element={<NewsPage />} />
+      <Route path={"/search"} element={<SearchPage />} />
+
       <Route
         path={ROUTES.CATALOG_PRODUCTS(":categorySlug")}
         element={<CatalogProductsPage key={location.pathname} />}
