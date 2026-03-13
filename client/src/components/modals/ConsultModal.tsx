@@ -24,8 +24,8 @@ function ConsultModal(p: IModalOpen) {
         >
           <h1 className="my-5 text-[32px] font-bold">Заказать консультацию</h1>
           <div className="w-full flex flex-col gap-3.75">
-            <InputField title="Ваше имя" />
-            <InputField title="Ваш телефон" />
+            <InputField title="Ваше имя" required />
+            <InputField title="Ваш телефон" required />
             <select className="py-1.5 pl-3 pr-8.75 border border-(--prime) bg-white outline-none appearance-none leading-[1.5] text-(--prime) bg-[url(/arrow-down.svg)] bg-position-[right_.75rem_center] bg-size-[16px_12px] bg-no-repeat">
               <option value="Кошкарбаева 29">Кошкарбаева 29</option>
               <option value="Калдаякова 29">Калдаякова 29</option>

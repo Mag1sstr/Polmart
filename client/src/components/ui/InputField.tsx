@@ -2,8 +2,14 @@ interface IProps {
   title?: string;
   textarea?: boolean;
   typeInput?: "number" | "search" | "text" | "email" | "password" | "tel";
+  required?: boolean;
 }
-function InputField({ title = "Поле", typeInput = "text", textarea }: IProps) {
+function InputField({
+  title = "Поле",
+  typeInput = "text",
+  textarea,
+  required,
+}: IProps) {
   return (
     <div>
       {textarea ? (
@@ -16,6 +22,7 @@ function InputField({ title = "Поле", typeInput = "text", textarea }: IProps
           className="w-full bg-white outline-none py-2 px-5 border border-(--prime) placeholder:text-(--prime)"
           type={typeInput}
           placeholder={title}
+          required={required}
         />
       )}
     </div>

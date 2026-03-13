@@ -1,3 +1,4 @@
+import Breadcrumbs from "../components/layout/Breadcrumbs";
 import Footer from "../components/layout/Footer";
 import Group from "../components/layout/Group";
 import Header from "../components/layout/Header";
@@ -8,6 +9,7 @@ function ContactsPage() {
   return (
     <>
       <Header />
+      <Breadcrumbs />
       <Group>
         <div className="max-w-[1200px] mx-auto">
           <h1 className="my-5 text-[32px] font-bold">Контакты</h1>

@@ -6,7 +6,7 @@ const breadcrumbsNames: Record<string, string> = {
   catalog: "Каталог",
   news: "Новости",
   product: "Продукт",
-  gallery: "Галерея",
+  galery: "Галерея",
   about: "О компании",
   contacts: "Контакты",
   laminate: "Ламинат",
