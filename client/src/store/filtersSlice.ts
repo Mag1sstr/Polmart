@@ -11,11 +11,13 @@ export type TSort =
 interface IInitState {
   sortType: TSort;
   categorySlug: string;
+  search: string;
 }
 
 const initialState: IInitState = {
   sortType: null,
   categorySlug: "",
+  search: "",
 };
 
 export const filtersSlice = createSlice({
@@ -25,9 +27,12 @@ export const filtersSlice = createSlice({
     setSortType(state, action: PayloadAction<TSort>) {
       state.sortType = action.payload;
     },
+    setSearch(state, action: PayloadAction<string>) {
+      state.search = action.payload;
+    },
   },
 });
 
-export const { setSortType } = filtersSlice.actions;
+export const { setSortType, setSearch } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

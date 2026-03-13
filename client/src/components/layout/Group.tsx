@@ -1,10 +1,11 @@
 interface IProps {
   title?: string;
   children: React.ReactNode;
+  className?: string;
 }
-function Group({ title, children }: IProps) {
+function Group({ title, children, className }: IProps) {
   return (
-    <section className="my-5 rounded-[4px]">
+    <section className={`my-5 rounded-[4px] ${className}`}>
       <div className="max-w-[1200px] mx-auto">
         <div className="bg-[#ffffffb3] p-5 ">
           {title && (
