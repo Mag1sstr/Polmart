@@ -1,11 +1,16 @@
 import { useRef, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../hooks";
+import { setSearch } from "../../store/filtersSlice";
 
 function Search() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const searchValue = useRef<HTMLInputElement>(null);
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    if (!searchValue.current?.value.trim().length) return;
+    dispatch(setSearch(searchValue.current.value));
     navigate("/search");
   };
   return (
