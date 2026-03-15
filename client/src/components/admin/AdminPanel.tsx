@@ -6,8 +6,16 @@ import ProductsTab from "./ProductsTab";
 import CategoriesTab from "./CategoriesTab";
 import NewsTab from "./NewsTab";
 import GalleryTab from "./GalleryTab";
+import ConsultTab from "./ConsultTab";
+import OrderTab from "./OrderTab";
 
-type Tab = "products" | "categories" | "news" | "gallery";
+type Tab =
+  | "products"
+  | "categories"
+  | "news"
+  | "gallery"
+  | "consult"
+  | "orders";
 
 function AdminPanel() {
   const [activeTab, setActiveTab] = useState<Tab>("products");
@@ -47,12 +55,24 @@ function AdminPanel() {
             isActive={activeTab === "gallery"}
             onClick={() => setActiveTab("gallery")}
           />
+          <TabButton
+            label="Заявки"
+            isActive={activeTab === "consult"}
+            onClick={() => setActiveTab("consult")}
+          />
+          <TabButton
+            label="Заказы"
+            isActive={activeTab === "orders"}
+            onClick={() => setActiveTab("orders")}
+          />
         </div>
 
         {activeTab === "products" && <ProductsTab />}
         {activeTab === "categories" && <CategoriesTab />}
         {activeTab === "news" && <NewsTab />}
         {activeTab === "gallery" && <GalleryTab />}
+        {activeTab === "consult" && <ConsultTab />}
+        {activeTab === "orders" && <OrderTab />}
       </div>
     </div>
   );

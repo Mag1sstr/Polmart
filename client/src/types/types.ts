@@ -16,6 +16,7 @@ export interface IProductParams {
   max_price?: number;
 }
 export interface IOrder {
+  _id: string;
   product_id: string;
   product_title: string;
   product_price: number;
@@ -31,6 +32,6 @@ export interface IConsult {
   name: string;
   phone: string;
   address: string;
-  status?: "new" | "done";
+  status: "new" | "done";
   createdAt: Date;
 }

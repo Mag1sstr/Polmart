@@ -215,7 +215,7 @@ export const api = createApi({
       }),
       providesTags: ["Order"],
     }),
-    createOrder: builder.mutation<IOrder, IOrder>({
+    createOrder: builder.mutation<IOrder, Omit<IOrder, "_id">>({
       query: (body) => ({
         url: "/orders",
         method: "POST",
@@ -236,7 +236,7 @@ export const api = createApi({
         url: "/consults",
       }),
     }),
-    createConsult: builder.mutation<IConsult, IConsult>({
+    createConsult: builder.mutation<IConsult, Omit<IConsult, "_id">>({
       query: (body) => ({
         method: "POST",
         url: "/consults",
@@ -284,4 +284,8 @@ export const {
   useGetOrdersQuery,
   useCreateOrderMutation,
   useDeleteOrderMutation,
+  useGetConsultsQuery,
+  useUpdateConsultMutation,
+  useCreateConsultMutation,
+  useDeleteConsultMutation,
 } = api;
