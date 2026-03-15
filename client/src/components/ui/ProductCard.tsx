@@ -18,8 +18,23 @@ function ProductCard({
     <article className="flex  flex-col rounded-[5px] overflow-hidden shadow-[0_0_10px_rgba(0,0,0,0.25)] bg-white">
       <Link to={`/catalog/${category?.slug}/${_id}`}>
         <div className="relative w-full h-[197px] ">
-          <div className="absolute top-1.25 left-1.25 py-1 px-3 bg-[#73b211] rounded text-white text-[13px]">
-            New
+          {isNew && (
+            <div className="absolute top-1.25 left-1.25 py-1 px-3 bg-[#73b211] rounded text-white text-[13px]">
+              New
+            </div>
+          )}
+          <div className="absolute bottom-2.5 right-2.5 w-8.75 h-8.75 rounded-full bg-white cursor-pointer flex items-center justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="25"
+              fill="none"
+            >
+              <path
+                d="M9.01 14.65H2v1.963h7.01v2.945L13 15.632l-3.99-3.926v2.944zm5.98-.981v-2.945H22V8.76h-7.01V5.816L11 9.742l3.99 3.927z"
+                fill="#9BD147"
+              />
+            </svg>
           </div>
           <img
             className="w-full h-full object-cover"

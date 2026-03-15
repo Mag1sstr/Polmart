@@ -16,7 +16,7 @@ function Search() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex-1 h-10 flex items-center py-2 px-5 border-2 border-[#73b211] bg-white"
+      className="flex-1 h-10 flex items-center py-2 px-5 border-2 border-[#73b211] bg-white  focus-within:ring-2 focus-within:ring-[#73b211]/30"
     >
       <input
         ref={searchValue}
@@ -24,10 +24,13 @@ function Search() {
         type="text"
         placeholder="Поиск"
       />
-      <img
-        src="https://polmart.kz/local/templates/besser/assets/build/img/mdi_search.svg"
-        alt=""
-      />
+      <button className="w-6 h-6.25 cursor-pointer">
+        <img
+          className="w-full h-full object-cover"
+          src="https://polmart.kz/local/templates/besser/assets/build/img/mdi_search.svg"
+          alt=""
+        />
+      </button>
     </form>
   );
 }

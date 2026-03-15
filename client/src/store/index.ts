@@ -3,6 +3,7 @@ import { api } from "./api";
 import adminReducer from "./adminSlice";
 import selectProductSlice from "./selectProductSlice";
 import filtersSlice from "./filtersSlice";
+import compareSlice from "./compareSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     admin: adminReducer,
     selectProduct: selectProductSlice,
     filters: filtersSlice,
+    compare: compareSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(api.middleware),

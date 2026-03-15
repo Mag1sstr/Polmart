@@ -17,14 +17,15 @@ function Header() {
               />
             </Link>
             <Search />
-            <div className="flex flex-col self-start mt-2">
-              <a className="text-white text-[21px]" href="tel:+77006111135">
-                8 700 611 11 35
-              </a>
+            <a
+              href="tel:+77006111135"
+              className="flex flex-col self-start mt-2"
+            >
+              <p className="text-white text-[21px]">8 700 611 11 35</p>
               <p className="text-[14px] text-(--prime) leading-5">
                 Обратный звонок
               </p>
-            </div>
+            </a>
           </div>
         </div>
       </header>

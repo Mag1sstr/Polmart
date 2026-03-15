@@ -1,5 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { IProductParams, ProductFormData } from "../types/types";
+import type {
+  IConsult,
+  IOrder,
+  IProductParams,
+  ProductFormData,
+} from "../types/types";
 
 const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
@@ -59,7 +64,7 @@ export interface GalleryItem {
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl }),
-  tagTypes: ["Product", "Category", "News", "Gallery"],
+  tagTypes: ["Product", "Category", "News", "Gallery", "Order"],
   endpoints: (builder) => ({
     checkAdmin: builder.mutation<
       { ok: boolean },
@@ -203,6 +208,57 @@ export const api = createApi({
       }),
       invalidatesTags: ["Gallery"],
     }),
+
+    getOrders: builder.query<IOrder[], void>({
+      query: () => ({
+        url: "/orders",
+      }),
+      providesTags: ["Order"],
+    }),
+    createOrder: builder.mutation<IOrder, IOrder>({
+      query: (body) => ({
+        url: "/orders",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["Order"],
+    }),
+    deleteOrder: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `/orders/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Order"],
+    }),
+
+    getConsults: builder.query<IConsult[], void>({
+      query: () => ({
+        url: "/consults",
+      }),
+    }),
+    createConsult: builder.mutation<IConsult, IConsult>({
+      query: (body) => ({
+        method: "POST",
+        url: "/consults",
+        body,
+      }),
+    }),
+    updateConsult: builder.mutation<
+      IConsult,
+      { id: string; data: Partial<Omit<IConsult, "_id">> }
+    >({
+      query: (body) => ({
+        method: "PUT",
+        url: "/consults",
+        body,
+      }),
+    }),
+    deleteConsult: builder.mutation<void, string>({
+      query: (id) => ({
+        method: "DELETE",
+        url: `/consults/${id}`,
+      }),
+    }),
   }),
 });
 
@@ -225,4 +281,7 @@ export const {
   useUpdateGalleryItemMutation,
   useDeleteGalleryItemMutation,
   useGetSingleProductQuery,
+  useGetOrdersQuery,
+  useCreateOrderMutation,
+  useDeleteOrderMutation,
 } = api;

@@ -15,3 +15,22 @@ export interface IProductParams {
   min_price?: number;
   max_price?: number;
 }
+export interface IOrder {
+  product_id: string;
+  product_title: string;
+  product_price: number;
+  product_count: number;
+  name: string;
+  phone: string;
+  email: string;
+  created_at: Date;
+  status: "new" | "confirmed" | "cancelled" | "done";
+}
+export interface IConsult {
+  _id: string;
+  name: string;
+  phone: string;
+  address: string;
+  status?: "new" | "done";
+  createdAt: Date;
+}

@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+dotenv.config();
 import cors from "cors";
 import morgan from "morgan";
 import { connectDB } from "./config/db";
@@ -9,8 +10,8 @@ import newsRoutes from "./routes/newsRoutes";
 import galleryRoutes from "./routes/galleryRoutes";
 import adminRoutes from "./routes/adminRoutes";
 import { errorHandler } from "./middleware/errorHandler";
-
-dotenv.config();
+import orderRoutes from "./routes/orderRoutes";
+import consultRoutes from "./routes/consultRoutes";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -32,6 +33,8 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/news", newsRoutes);
 app.use("/api/gallery", galleryRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/consults", consultRoutes);
 
 // Error handler
 app.use(errorHandler);
