@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   useDeleteConsultMutation,
   useGetConsultsQuery,
@@ -6,6 +6,7 @@ import {
 } from "../../store/api";
 import type { IConsult } from "../../types/types";
 import Loader from "../ui/Loader";
+import { useClickOutside } from "../../hooks/useClickOutside";
 
 function ConsultTab() {
   const [editStatus, setEditStatus] = useState<string | null>(null);
@@ -16,7 +17,10 @@ function ConsultTab() {
     isSuccess,
   } = useGetConsultsQuery();
   const [deleteConsult] = useDeleteConsultMutation();
-  const [updateConsult] = useUpdateConsultMutation();
+  const [updateConsult, { isLoading: isUpdateLoading }] =
+    useUpdateConsultMutation();
+
+  const editMenuRef = useRef<HTMLDivElement>(null);
 
   type TConsultStatus = IConsult["status"];
 
@@ -24,10 +28,16 @@ function ConsultTab() {
     new: { name: "Новый", color: "text-green-400" },
     done: { name: "Выполнена", color: "text-green-400" },
   };
+
+  useClickOutside(editMenuRef, () => {
+    setEditStatus(null);
+  });
+
   return (
     <section className="bg-white p-4 border">
       <h3 className="font-semibold mb-5">Список заявок</h3>
       {isLoading && <Loader />}
+      {isUpdateLoading && <Loader />}
       {!!consults?.length && (
         <div className="">
           <table className="min-w-full text-sm border">
@@ -54,7 +64,11 @@ function ConsultTab() {
 
                   <td className="border px-2 py-1">
                     <div className="flex gap-5">
-                      <div className="relative">
+                      <div
+                        onClick={(e) => e.stopPropagation()}
+                        ref={editMenuRef}
+                        className="relative"
+                      >
                         <button
                           onClick={() => setEditStatus(p._id)}
                           className="text-blue-600 cursor-pointer hover:underline"
@@ -67,6 +81,16 @@ function ConsultTab() {
                               <p
                                 className="p-3 transition-all hover:bg-(--prime) hover:text-white cursor-pointer"
                                 key={key}
+                                onClick={() => {
+                                  updateConsult({
+                                    id: p._id,
+                                    data: {
+                                      status: key as TConsultStatus,
+                                    },
+                                  }).then(() => {
+                                    setEditStatus(null);
+                                  });
+                                }}
                               >
                                 {v.name}
                               </p>

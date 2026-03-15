@@ -1,10 +1,21 @@
-import { useDeleteOrderMutation, useGetOrdersQuery } from "../../store/api";
+import { useRef, useState } from "react";
+import {
+  useDeleteOrderMutation,
+  useGetOrdersQuery,
+  useUpdateOrderMutation,
+} from "../../store/api";
 import type { IOrder } from "../../types/types";
 import Loader from "../ui/Loader";
+import { useClickOutside } from "../../hooks/useClickOutside";
 
 function OrderTab() {
+  const [editStatus, setEditStatus] = useState<string | null>(null);
+  const editMenuRef = useRef<HTMLDivElement>(null);
+
   const { data: orders, isLoading, isError, isSuccess } = useGetOrdersQuery();
   const [deleteOrder] = useDeleteOrderMutation();
+  const [updateOrder, { isLoading: isUpdateLoading }] =
+    useUpdateOrderMutation();
 
   type TStatus = IOrder["status"];
   const status: Record<TStatus, { name: string; color: string }> = {
@@ -17,12 +28,16 @@ function OrderTab() {
   const handleDelete = (id: string) => {
     deleteOrder(id);
   };
+  useClickOutside(editMenuRef, () => {
+    setEditStatus(null);
+  });
   return (
     <section className="p-4 border bg-white">
       <h3 className="font-semibold mb-5">Список заказов</h3>
       {isLoading && <Loader />}
+      {isUpdateLoading && <Loader />}
       {!!orders?.length && (
-        <div className="overflow-x-auto">
+        <div className="">
           <table className="min-w-full text-sm border">
             <thead className="bg-slate-100">
               <tr>
@@ -58,7 +73,40 @@ function OrderTab() {
                   </td>
 
                   <td className="border px-2 py-1 space-x-2">
-                    <button className="text-blue-600">Изменить статус</button>
+                    <div
+                      onClick={(e) => e.stopPropagation()}
+                      ref={editMenuRef}
+                      className="relative"
+                    >
+                      <button
+                        onClick={() => setEditStatus(p._id)}
+                        className="text-blue-600 cursor-pointer hover:underline"
+                      >
+                        Изменить статус
+                      </button>
+                      {editStatus === p._id && (
+                        <div className="absolute top-full left-0 w-60 py-3 bg-white shadow-2xl border z-20 rounded flex flex-col">
+                          {Object.entries(status).map(([key, v]) => (
+                            <p
+                              className="p-3 transition-all hover:bg-(--prime) hover:text-white cursor-pointer"
+                              key={key}
+                              onClick={() => {
+                                updateOrder({
+                                  id: p._id,
+                                  data: {
+                                    status: key as TStatus,
+                                  },
+                                }).then(() => {
+                                  setEditStatus(null);
+                                });
+                              }}
+                            >
+                              {v.name}
+                            </p>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                     <button
                       className="text-red-600"
                       onClick={() => handleDelete(p._id)}

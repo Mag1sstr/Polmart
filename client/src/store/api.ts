@@ -64,7 +64,7 @@ export interface GalleryItem {
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl }),
-  tagTypes: ["Product", "Category", "News", "Gallery", "Order"],
+  tagTypes: ["Product", "Category", "News", "Gallery", "Order", "Consult"],
   endpoints: (builder) => ({
     checkAdmin: builder.mutation<
       { ok: boolean },
@@ -223,6 +223,17 @@ export const api = createApi({
       }),
       invalidatesTags: ["Order"],
     }),
+    updateOrder: builder.mutation<
+      IOrder,
+      { id: string; data: Partial<Omit<IOrder, "_id">> }
+    >({
+      query: ({ id, data }) => ({
+        url: `/orders/${id}`,
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["Order"],
+    }),
     deleteOrder: builder.mutation<void, string>({
       query: (id) => ({
         url: `/orders/${id}`,
@@ -235,6 +246,7 @@ export const api = createApi({
       query: () => ({
         url: "/consults",
       }),
+      providesTags: ["Consult"],
     }),
     createConsult: builder.mutation<IConsult, Omit<IConsult, "_id">>({
       query: (body) => ({
@@ -242,22 +254,25 @@ export const api = createApi({
         url: "/consults",
         body,
       }),
+      invalidatesTags: ["Consult"],
     }),
     updateConsult: builder.mutation<
       IConsult,
       { id: string; data: Partial<Omit<IConsult, "_id">> }
     >({
-      query: (body) => ({
+      query: ({ id, data }) => ({
         method: "PUT",
-        url: "/consults",
-        body,
+        url: `/consults/${id}`,
+        body: data,
       }),
+      invalidatesTags: ["Consult"],
     }),
     deleteConsult: builder.mutation<void, string>({
       query: (id) => ({
         method: "DELETE",
         url: `/consults/${id}`,
       }),
+      invalidatesTags: ["Consult"],
     }),
   }),
 });
@@ -288,4 +303,5 @@ export const {
   useUpdateConsultMutation,
   useCreateConsultMutation,
   useDeleteConsultMutation,
+  useUpdateOrderMutation,
 } = api;
