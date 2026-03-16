@@ -6,11 +6,10 @@ import Pagination from "../components/layout/Pagination";
 import ProductCard from "../components/ui/ProductCard";
 import Breadcrumbs from "../components/layout/Breadcrumbs";
 import { useGetProductsQuery } from "../store/api";
-import { data, useParams } from "react-router-dom";
-import Loader from "../components/ui/Loader";
+import { useParams } from "react-router-dom";
 import Skeleton from "../components/ui/Skeleton";
 import { useAppSelector } from "../hooks";
-const pageSize = 6;
+import { useDebounce } from "../hooks/useDebouce";
 
 function CatalogProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -25,29 +24,30 @@ function CatalogProductsPage() {
       category: categorySlug,
       page: currentPage,
       size: 6,
+      sort: useDebounce(sortType),
     },
     { skip: !categorySlug, refetchOnMountOrArgChange: true },
   );
   const totalPages = data?.totalPages;
 
-  const filteredProducts = sortType
-    ? [...data.products].sort((a, b) => {
-        switch (sortType) {
-          case "asc":
-            return a.price - b.price;
-          case "desc":
-            return b.price - a.price;
-          case "discountAsc":
-            return a.discount - b.discount;
-          case "discountDesc":
-            return b.discount - a.discount;
-          case "name":
-            return a.title.localeCompare(b.title);
-          default:
-            return a.price - b.price;
-        }
-      })
-    : data.products;
+  // const filteredProducts = sortType
+  //   ? [...data.products].sort((a, b) => {
+  //       switch (sortType) {
+  //         case "asc":
+  //           return a.price - b.price;
+  //         case "desc":
+  //           return b.price - a.price;
+  //         case "discountAsc":
+  //           return a.discount - b.discount;
+  //         case "discountDesc":
+  //           return b.discount - a.discount;
+  //         case "name":
+  //           return a.title.localeCompare(b.title);
+  //         default:
+  //           return a.price - b.price;
+  //       }
+  //     })
+  //   : data.products;
 
   return (
     <>
@@ -70,7 +70,7 @@ function CatalogProductsPage() {
             )}
 
             <div className="grid grid-cols-3 gap-8.75">
-              {filteredProducts?.map((product) => (
+              {data.products?.map((product) => (
                 <ProductCard key={product._id} {...product} />
               ))}
             </div>

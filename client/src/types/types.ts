@@ -1,4 +1,5 @@
 import type { Product } from "../store/api";
+import type { TSort } from "../store/filtersSlice";
 
 export interface IModalOpen {
   open: boolean;
@@ -14,6 +15,7 @@ export interface IProductParams {
   size?: number;
   min_price?: number;
   max_price?: number;
+  sort?: TSort;
 }
 export interface IOrder {
   _id: string;
