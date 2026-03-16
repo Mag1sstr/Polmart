@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { Product } from "../models/Product";
 import { Category } from "../models/Category";
+import { SortOrder } from "mongoose";
 
 // export const getProducts = async (
 //   req: Request,
@@ -44,9 +45,27 @@ export const getProducts = async (
       max_price,
       page = 1,
       size = 10,
+      sort,
     } = req.query;
 
     const filter: any = {};
+
+    function getSort(sort: any): Record<string, SortOrder> {
+      switch (sort) {
+        case "asc":
+          return { price: 1 };
+        case "desc":
+          return { price: -1 };
+        case "discountAsc":
+          return { discount: 1 };
+        case "discountDesc":
+          return { discount: -1 };
+        case "name":
+          return { title: 1 };
+        default:
+          return { createdAt: -1 };
+      }
+    }
 
     if (category) {
       const categoryDoc = await Category.findOne({ slug: category });
@@ -91,7 +110,7 @@ export const getProducts = async (
       .populate("category")
       .skip(skip)
       .limit(pageSize)
-      .sort({ createdAt: -1 });
+      .sort(getSort(sort));
 
     res.json({
       products,
