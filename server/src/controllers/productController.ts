@@ -46,9 +46,18 @@ export const getProducts = async (
       page = 1,
       size = 10,
       sort,
+      isNew,
+      discount,
     } = req.query;
 
     const filter: any = {};
+
+    if (isNew === "true") {
+      filter.isNew = true;
+    }
+    if (discount === "true") {
+      filter.discount = { $gt: 0 };
+    }
 
     function getSort(sort: any): Record<string, SortOrder> {
       switch (sort) {

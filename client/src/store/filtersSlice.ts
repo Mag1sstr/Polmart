@@ -41,9 +41,12 @@ export const filtersSlice = createSlice({
     setMaxRange(state, action: PayloadAction<number>) {
       state.rangePrice.min = action.payload;
     },
+    setPriceRange(state, action) {
+      state.rangePrice = action.payload;
+    },
   },
 });
 
-export const { setSortType, setSearch } = filtersSlice.actions;
+export const { setSortType, setSearch, setPriceRange } = filtersSlice.actions;
 
 export default filtersSlice.reducer;

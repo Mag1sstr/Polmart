@@ -16,6 +16,8 @@ export interface IProductParams {
   min_price?: number;
   max_price?: number;
   sort?: TSort;
+  isNew?: boolean;
+  discount?: boolean;
 }
 export interface IOrder {
   _id: string;
