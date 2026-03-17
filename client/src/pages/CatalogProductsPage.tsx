@@ -23,7 +23,7 @@ function CatalogProductsPage() {
   const [isNew, setIsNew] = useState(false);
   const [discount, setDiscount] = useState(false);
   const [localRange, setLocalRange] = useState<number[]>(rangePrice);
-  const debouncedRange = useDebounce(rangePrice);
+  // const debouncedRange = useDebounce(rangePrice);
 
   const {
     data = {
@@ -43,8 +43,8 @@ function CatalogProductsPage() {
       sort: useDebounce(sortType),
       discount,
       isNew,
-      min_price: debouncedRange[0],
-      max_price: debouncedRange[1],
+      min_price: rangePrice[0],
+      max_price: rangePrice[1],
     },
     { skip: !categorySlug, refetchOnMountOrArgChange: true },
   );

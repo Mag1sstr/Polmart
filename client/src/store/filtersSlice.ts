@@ -19,7 +19,7 @@ const initialState: IInitState = {
   sortType: null,
   categorySlug: "",
   search: "",
-  rangePrice: [0, 0],
+  rangePrice: [0, 999999],
 };
 
 export const filtersSlice = createSlice({
