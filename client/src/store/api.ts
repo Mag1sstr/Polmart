@@ -37,6 +37,7 @@ export interface IProductResponse {
   totalPages: number;
   totalProducts: number;
   currentPage: number;
+  maxPrice: number;
 }
 
 export interface Category {

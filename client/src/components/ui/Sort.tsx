@@ -61,8 +61,6 @@ function Sort() {
     return null;
   }
 
-  console.log(sort);
-
   return (
     <ul className="flex gap-5 items-center select-none">
       <li>Сортировать по:</li>

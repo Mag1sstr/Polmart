@@ -12,17 +12,14 @@ interface IInitState {
   sortType: TSort;
   categorySlug: string;
   search: string;
-  rangePrice: {
-    min: number;
-    max: number;
-  };
+  rangePrice: [n: number, n: number];
 }
 
 const initialState: IInitState = {
   sortType: null,
   categorySlug: "",
   search: "",
-  rangePrice: { min: 0, max: 0 },
+  rangePrice: [0, 0],
 };
 
 export const filtersSlice = createSlice({
@@ -36,10 +33,10 @@ export const filtersSlice = createSlice({
       state.search = action.payload;
     },
     setMinRange(state, action: PayloadAction<number>) {
-      state.rangePrice.min = action.payload;
+      state.rangePrice[0] = action.payload;
     },
     setMaxRange(state, action: PayloadAction<number>) {
-      state.rangePrice.min = action.payload;
+      state.rangePrice[1] = action.payload;
     },
     setPriceRange(state, action) {
       state.rangePrice = action.payload;
@@ -47,6 +44,7 @@ export const filtersSlice = createSlice({
   },
 });
 
-export const { setSortType, setSearch, setPriceRange } = filtersSlice.actions;
+export const { setSortType, setSearch, setPriceRange, setMaxRange } =
+  filtersSlice.actions;
 
 export default filtersSlice.reducer;

@@ -115,6 +115,12 @@ export const getProducts = async (
 
     const totalPages = Math.ceil(totalProducts / pageSize);
 
+    const maxPriceResult = await Product.aggregate([
+      { $group: { _id: null, maxPrice: { $max: "$price" } } },
+    ]);
+
+    const maxPrice = maxPriceResult[0]?.maxPrice || 0;
+
     const products = await Product.find(filter)
       .populate("category")
       .skip(skip)
@@ -126,6 +132,7 @@ export const getProducts = async (
       totalPages,
       totalProducts,
       currentPage: pageNumber,
+      maxPrice,
     });
   } catch (err) {
     next(err);

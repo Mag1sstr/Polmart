@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState, type SyntheticEvent } from "react";
 import Footer from "../components/layout/Footer";
 import Group from "../components/layout/Group";
 import Header from "../components/layout/Header";
@@ -13,18 +13,26 @@ import { useDebounce } from "../hooks/useDebouce";
 import DropFIlterItem from "../components/ui/DropFIlterItem";
 import { Check } from "lucide-react";
 import { Slider } from "@mui/material";
-import { setPriceRange } from "../store/filtersSlice";
+import { setMaxRange, setPriceRange } from "../store/filtersSlice";
 
 function CatalogProductsPage() {
   const dispatch = useAppDispatch();
   const [currentPage, setCurrentPage] = useState(1);
   const { categorySlug } = useParams();
-  const { sortType } = useAppSelector((state) => state.filters);
+  const { sortType, rangePrice } = useAppSelector((state) => state.filters);
   const [isNew, setIsNew] = useState(false);
   const [discount, setDiscount] = useState(false);
+  const [localRange, setLocalRange] = useState<number[]>(rangePrice);
+  const debouncedRange = useDebounce(rangePrice);
 
   const {
-    data = { products: [], totalPages: 0, totalProducts: 0, currentPage: 1 },
+    data = {
+      products: [],
+      totalPages: 0,
+      totalProducts: 0,
+      currentPage: 1,
+      maxPrice: 0,
+    },
     isLoading,
     isSuccess,
   } = useGetProductsQuery(
@@ -35,16 +43,30 @@ function CatalogProductsPage() {
       sort: useDebounce(sortType),
       discount,
       isNew,
+      min_price: debouncedRange[0],
+      max_price: debouncedRange[1],
     },
     { skip: !categorySlug, refetchOnMountOrArgChange: true },
   );
-  const totalPages = data?.totalPages;
+  const totalPages = data.totalPages;
+  const max = data.maxPrice;
 
-  // const handleChangePriceRange = (range) => {
-  //   // dispatch(setPriceRange())
-  // };
+  const handleChangePriceRange = (_: Event | SyntheticEvent, v: number[]) => {
+    setLocalRange(v);
+  };
+  const handleChangeCommitedRange = (
+    _: Event | SyntheticEvent,
+    v: number[],
+  ) => {
+    dispatch(setPriceRange(v));
+  };
 
-  console.log(discount, isNew);
+  useEffect(() => {
+    if (data.maxPrice) {
+      setLocalRange([localRange[0], data.maxPrice]);
+      dispatch(setMaxRange(data.maxPrice));
+    }
+  }, [data.maxPrice]);
 
   return (
     <>
@@ -59,14 +81,33 @@ function CatalogProductsPage() {
               <h2 className="bg-white p-2 font-medium">Фильтры</h2>
               <div className="px-2 pt-5">
                 <DropFIlterItem label="Цена">
-                  <div className="px-2 pt-8">
+                  <div className="px-3">
                     <Slider
-                      value={[0, 888]}
-                      onChange={() => {}}
-                      valueLabelDisplay="auto"
-                      min={1}
-                      max={9999}
+                      value={localRange}
+                      onChange={handleChangePriceRange}
+                      onChangeCommitted={handleChangeCommitedRange}
+                      min={0}
+                      max={max}
+                      sx={{ color: "var(--prime)" }}
                     />
+                  </div>
+                  <div className="flex gap-5">
+                    <div className=" flex-1">
+                      от
+                      <input
+                        value={localRange[0]}
+                        className="w-full block p-2 border border-[#ccd5db] rounded text-[18px]"
+                        type="number"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      до
+                      <input
+                        value={localRange[1]}
+                        className="w-full block p-2 border border-[#ccd5db]  rounded text-[18px]"
+                        type="number"
+                      />
+                    </div>
                   </div>
                 </DropFIlterItem>
                 <DropFIlterItem label="Новинка">

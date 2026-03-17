@@ -23,7 +23,12 @@ function ProductCard({
               New
             </div>
           )}
-          <div className="absolute bottom-2.5 right-2.5 w-8.75 h-8.75 rounded-full bg-white cursor-pointer flex items-center justify-center">
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            className="absolute bottom-2.5 right-2.5 w-8.75 h-8.75 rounded-full bg-white cursor-pointer flex items-center justify-center"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
