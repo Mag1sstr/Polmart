@@ -34,7 +34,7 @@ function AdminPanel() {
       </header>
 
       <div className="max-w-6xl mx-auto py-6 px-4">
-        <div className="mb-4 flex gap-2">
+        <div className="flex gap-2">
           <TabButton
             label="Продукты"
             isActive={activeTab === "products"}
