@@ -60,7 +60,7 @@ function ContactsPage() {
                   href="https://yandex.kz/maps/ru/163/astana/house/raqymzhan_qoshqarbaev_dangghyly_29/Y0gYcg5hTUEEQFtrfX1zeXxnbQ==/?ll=71.491443%2C51.128049&utm_medium=mapframe&utm_source=maps&z=17.11"
                   className="text-[#eee] text-[12px] absolute top-3.5"
                 >
-                  Проспект Рахимжана Кошкарбаева, 29 — Яндекс Карты
+                  Проспект Рахимжана Кошкарбаева, 29 — Яндекс Карты
                 </a>
                 <iframe
                   src="https://yandex.kz/map-widget/v1/?ll=71.491443%2C51.128049&mode=search&ol=geo&ouri=ymapsbm1%3A%2F%2Fgeo%3Fdata%3DCgozMjI1NDA4ODI3ElrSmtCw0LfQsNKb0YHRgtCw0L0sINCQ0YHRgtCw0L3QsCwg0KDQsNKb0YvQvNC20LDQvSDSmtC-0YjSm9Cw0YDQsdCw0LXQsiDQtNCw0qPSk9GL0LvRiywgMjkiCg2f-45CFR-DTEI%2C&z=17.11"

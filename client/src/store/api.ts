@@ -1,10 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type {
-  IConsult,
-  IOrder,
-  IProductParams,
-  ProductFormData,
-} from "../types/types";
+import type { IConsult, IOrder, IProductParams } from "../types/types";
 
 const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 

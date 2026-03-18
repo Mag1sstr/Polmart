@@ -1,4 +1,4 @@
-import type { IProductResponse, Product } from "../../store/api";
+import type { IProductResponse } from "../../store/api";
 import ProductCard from "../ui/ProductCard";
 
 interface IProps {

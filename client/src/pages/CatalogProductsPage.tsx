@@ -23,7 +23,6 @@ function CatalogProductsPage() {
   const [isNew, setIsNew] = useState(false);
   const [discount, setDiscount] = useState(false);
   const [localRange, setLocalRange] = useState<number[]>(rangePrice);
-  // const debouncedRange = useDebounce(rangePrice);
 
   const {
     data = {
@@ -62,11 +61,15 @@ function CatalogProductsPage() {
   };
 
   useEffect(() => {
-    if (data.maxPrice) {
-      setLocalRange([localRange[0], data.maxPrice]);
-      dispatch(setMaxRange(data.maxPrice));
+    if (!data.maxPrice) return;
+
+    if (localRange[1] !== data.maxPrice) {
+      queueMicrotask(() => {
+        setLocalRange((prev) => [prev[0], data.maxPrice]);
+        dispatch(setMaxRange(data.maxPrice));
+      });
     }
-  }, [data.maxPrice]);
+  }, [data.maxPrice, dispatch]);
 
   return (
     <>

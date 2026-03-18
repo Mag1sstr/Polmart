@@ -11,10 +11,6 @@ import Input from "../ui/Input";
 import { objectToFormData } from "../../utils/objectToFormData";
 import type { ProductFormData } from "../../types/types";
 
-interface IEdit extends ProductFormData {
-  _id: string;
-}
-
 function ProductsTab() {
   const { data } = useGetProductsQuery({});
   const [createProduct] = useCreateProductMutation();

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../utils/routes";
-import { Swiper, SwiperSlide } from "swiper/react";
 import { motion } from "motion/react";
 
 const SLIDES = [

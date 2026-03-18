@@ -1,5 +1,3 @@
-import type { ChangeEvent } from "react";
-
 interface IProps {
   title?: string;
   textarea?: boolean;

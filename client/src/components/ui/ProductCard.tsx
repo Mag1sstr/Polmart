@@ -1,9 +1,6 @@
 import { Link } from "react-router-dom";
-import { ROUTES } from "../../utils/routes";
 import type { Product } from "../../store/api";
 import { getImage } from "../../utils/getImage";
-
-interface IProps extends Product {}
 
 function ProductCard({
   _id,
@@ -13,7 +10,7 @@ function ProductCard({
   title,
   isNew,
   discount,
-}: IProps) {
+}: Product) {
   return (
     <article className="flex  flex-col rounded-[5px] overflow-hidden shadow-[0_0_10px_rgba(0,0,0,0.25)] bg-white">
       <Link to={`/catalog/${category?.slug}/${_id}`}>

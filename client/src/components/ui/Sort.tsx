@@ -1,9 +1,6 @@
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { setSortType, type TSort } from "../../store/filtersSlice";
-import { useState } from "react";
-
-type IconsType = NonNullable<TSort>;
 
 function Sort() {
   const dispatch = useAppDispatch();
