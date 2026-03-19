@@ -1,11 +1,8 @@
-import Footer from "../components/layout/Footer";
 import Group from "../components/layout/Group";
-import Header from "../components/layout/Header";
 
 function AboutPage() {
   return (
     <>
-      <Header />
       <section>
         <Group>
           <h1 className="my-5 text-[32px] font-bold">О компании</h1>
@@ -65,7 +62,6 @@ function AboutPage() {
           <p>с любовью - команда "BASCOR Group"</p>
         </Group>
       </section>
-      <Footer />
     </>
   );
 }

@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
-import Footer from "../components/layout/Footer";
 import Group from "../components/layout/Group";
-import Header from "../components/layout/Header";
 import { ROUTES } from "../utils/routes";
 import { useGetCategoriesQuery } from "../store/api";
 import Loader from "../components/ui/Loader";
@@ -11,7 +9,6 @@ function CatalogPage() {
   const { data: categories, isError, isLoading } = useGetCategoriesQuery();
   return (
     <>
-      <Header />
       <Breadcrumbs />
       <Group>
         <h1 className="py-5 text-[2rem] font-bold">Каталог</h1>
@@ -35,7 +32,6 @@ function CatalogPage() {
           ))}
         </ul>
       </Group>
-      <Footer />
     </>
   );
 }

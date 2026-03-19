@@ -1,7 +1,5 @@
 import Breadcrumbs from "../components/layout/Breadcrumbs";
-import Footer from "../components/layout/Footer";
 import Group from "../components/layout/Group";
-import Header from "../components/layout/Header";
 import SeoText from "../components/ui/SeoText";
 import Skeleton from "../components/ui/Skeleton";
 import { useGetGalleryQuery } from "../store/api";
@@ -10,7 +8,6 @@ function GalleryPage() {
   const { data: gallery, isLoading, isError, isSuccess } = useGetGalleryQuery();
   return (
     <>
-      <Header />
       <Breadcrumbs />
       <Group>
         <h1 className="my-5 text-[32px] font-bold">Галерея</h1>
@@ -46,7 +43,6 @@ function GalleryPage() {
       <Group>
         <SeoText />
       </Group>
-      <Footer />
     </>
   );
 }

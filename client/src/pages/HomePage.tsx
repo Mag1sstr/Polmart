@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import Footer from "../components/layout/Footer";
 import Group from "../components/layout/Group";
-import Header from "../components/layout/Header";
 import ProductList from "../components/layout/ProductList";
 import Slider from "../components/layout/Slider";
 import SeoText from "../components/ui/SeoText";
@@ -34,7 +32,6 @@ function HomePage() {
   return (
     <>
       <ConsultModal open={openConsult} setOpen={setOpenConsult} />
-      <Header />
       <Slider />
       <Group title="Новое">
         {isLoading && <Skeleton count={4} cols={4} />}
@@ -49,8 +46,6 @@ function HomePage() {
         }
       />
       <Group children={<SeoText />} />
-
-      <Footer />
     </>
   );
 }

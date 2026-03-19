@@ -1,7 +1,5 @@
 import Breadcrumbs from "../components/layout/Breadcrumbs";
-import Footer from "../components/layout/Footer";
 import Group from "../components/layout/Group";
-import Header from "../components/layout/Header";
 import SeoText from "../components/ui/SeoText";
 import { useGetNewsQuery } from "../store/api";
 import { getImage } from "../utils/getImage";
@@ -11,7 +9,6 @@ function NewsPage() {
   const { data: news, isLoading, isError } = useGetNewsQuery();
   return (
     <>
-      <Header />
       <Breadcrumbs />
       <Group>
         <h1 className="text-[32px] font-bold my-5">Новости</h1>
@@ -46,7 +43,6 @@ function NewsPage() {
       <Group>
         <SeoText />
       </Group>
-      <Footer />
     </>
   );
 }

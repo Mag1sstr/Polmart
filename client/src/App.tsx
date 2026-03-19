@@ -6,8 +6,7 @@ function App() {
   return (
     <>
       <AppRouter />
-      <WhatsappBtn />
-      <CompareBtn />
+
       <div className="wrp"></div>
     </>
   );

@@ -1,7 +1,5 @@
 import Breadcrumbs from "../components/layout/Breadcrumbs";
-import Footer from "../components/layout/Footer";
 import Group from "../components/layout/Group";
-import Header from "../components/layout/Header";
 import ProductList from "../components/layout/ProductList";
 import Skeleton from "../components/ui/Skeleton";
 import { useAppSelector } from "../hooks";
@@ -18,7 +16,6 @@ function SearchPage() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
       <Breadcrumbs />
       <Group className="flex-1" title="Поиск">
         {isError && <p>Что-то пошло не так.</p>}
@@ -30,7 +27,6 @@ function SearchPage() {
         {isLoading && <Skeleton cols={4} count={4} />}
         {data && <ProductList data={data} />}
       </Group>
-      <Footer />
     </div>
   );
 }

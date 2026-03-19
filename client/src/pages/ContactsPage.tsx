@@ -1,14 +1,11 @@
 import Breadcrumbs from "../components/layout/Breadcrumbs";
-import Footer from "../components/layout/Footer";
 import Group from "../components/layout/Group";
-import Header from "../components/layout/Header";
 import InputField from "../components/ui/InputField";
 import SeoText from "../components/ui/SeoText";
 
 function ContactsPage() {
   return (
     <>
-      <Header />
       <Breadcrumbs />
       <Group>
         <div className="max-w-[1200px] mx-auto">
@@ -74,7 +71,6 @@ function ContactsPage() {
         </div>
       </Group>
       <Group children={<SeoText />} />
-      <Footer />
     </>
   );
 }

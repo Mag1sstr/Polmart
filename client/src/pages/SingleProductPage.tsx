@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import Footer from "../components/layout/Footer";
 import Group from "../components/layout/Group";
-import Header from "../components/layout/Header";
 import BuyProductModal from "../components/modals/BuyProductModal";
 import { useGetSingleProductQuery } from "../store/api";
 import { useParams } from "react-router-dom";
@@ -48,7 +46,6 @@ function SingleProductPage() {
     <>
       <BuyProductModal open={openModal} setOpen={setOpenModal} count={count} />
 
-      <Header />
       <section>
         <Group>
           {isLoading && <Skeleton type="productPage" />}
@@ -183,7 +180,6 @@ function SingleProductPage() {
           {isError && <p>Попробуйте позже.</p>}
         </Group>
       </section>
-      <Footer />
     </>
   );
 }
