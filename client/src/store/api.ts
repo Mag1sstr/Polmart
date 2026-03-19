@@ -55,6 +55,7 @@ export interface GalleryItem {
   img: string;
   title: string;
   date: string;
+  description?: string;
 }
 
 export const api = createApi({

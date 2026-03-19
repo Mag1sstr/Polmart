@@ -18,6 +18,7 @@ function GalleryTab() {
     img: "",
     title: "",
     date: new Date().toISOString().slice(0, 10),
+    description: "",
   };
   const [form, setForm] = useState<Omit<GalleryItem, "_id">>(empty);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -46,6 +47,11 @@ function GalleryTab() {
           label="Заголовок"
           value={form.title}
           onChange={(v) => setForm({ ...form, title: v })}
+        />
+        <Input
+          label="Текст новости"
+          value={form.description!}
+          onChange={(v) => setForm({ ...form, description: v })}
         />
         <Input
           label="Картинка (URL)"
@@ -90,6 +96,11 @@ function GalleryTab() {
             >
               <div>
                 <div className="font-medium">{g.title}</div>
+                {!!g.description?.length && (
+                  <div className="max-w-[200px] whitespace-nowrap text-ellipsis overflow-hidden">
+                    {g.description}
+                  </div>
+                )}
                 <div className="text-xs text-slate-500">
                   {new Date(g.date).toLocaleDateString()}
                 </div>

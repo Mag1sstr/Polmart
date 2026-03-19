@@ -57,7 +57,7 @@ function OrderTab() {
                 <tr key={p._id}>
                   <td className="border px-2 py-1">{p.phone}</td>
                   <td className="border px-2 py-1">{p.email}</td>
-                  <td className="border px-2 py-1">{p.name}</td>
+                  <td className="border px-2 py-1">{p.product_title}</td>
                   <td className="border px-2 py-1">{p.product_price}</td>
                   <td className="border px-2 py-1">{p.product_count}</td>
                   <td className="border px-2 py-1">
