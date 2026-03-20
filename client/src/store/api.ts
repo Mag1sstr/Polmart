@@ -58,6 +58,18 @@ export interface GalleryItem {
   description?: string;
 }
 
+export interface ProductFilters extends Omit<
+  Product,
+  | "_id"
+  | "title"
+  | "description"
+  | "price"
+  | "discount"
+  | "isNew"
+  | "category"
+  | "images"
+> {}
+
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl }),
@@ -271,6 +283,11 @@ export const api = createApi({
       }),
       invalidatesTags: ["Consult"],
     }),
+    getProductsFilters: builder.query<ProductFilters, void>({
+      query: () => ({
+        url: "/products/filters",
+      }),
+    }),
   }),
 });
 
@@ -301,4 +318,5 @@ export const {
   useCreateConsultMutation,
   useDeleteConsultMutation,
   useUpdateOrderMutation,
+  useGetProductsFiltersQuery,
 } = api;

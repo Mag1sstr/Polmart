@@ -3,7 +3,11 @@ import Group from "../components/layout/Group";
 import Pagination from "../components/layout/Pagination";
 import ProductCard from "../components/ui/ProductCard";
 import Breadcrumbs from "../components/layout/Breadcrumbs";
-import { useGetProductsQuery } from "../store/api";
+import {
+  useGetProductsFiltersQuery,
+  useGetProductsQuery,
+  type ProductFilters,
+} from "../store/api";
 import { useParams } from "react-router-dom";
 import Skeleton from "../components/ui/Skeleton";
 import { useAppDispatch, useAppSelector } from "../hooks";
@@ -12,6 +16,7 @@ import DropFIlterItem from "../components/ui/DropFIlterItem";
 import { Check } from "lucide-react";
 import { Slider } from "@mui/material";
 import { setMaxRange, setPriceRange } from "../store/filtersSlice";
+import { filterNames } from "../utils/constants";
 
 function CatalogProductsPage() {
   const dispatch = useAppDispatch();
@@ -45,6 +50,9 @@ function CatalogProductsPage() {
     },
     { skip: !categorySlug, refetchOnMountOrArgChange: true },
   );
+
+  const { data: filters = {} } = useGetProductsFiltersQuery();
+
   const totalPages = data.totalPages;
   const max = data.maxPrice;
 
@@ -144,6 +152,60 @@ function CatalogProductsPage() {
                     Да
                   </label>
                 </DropFIlterItem>
+                {Object.entries(filters).map(([key, value]) => {
+                  if (Array.isArray(value) && typeof value[0] !== "boolean") {
+                    return (
+                      <DropFIlterItem
+                        key={key}
+                        label={filterNames[key as keyof ProductFilters] || key}
+                      >
+                        {value.map((el) => (
+                          <label
+                            key={el}
+                            htmlFor={el}
+                            className="flex items-center gap-2 cursor-pointer not-last:mb-4"
+                          >
+                            <input
+                              onChange={(e) =>
+                                setDiscount(e.currentTarget.checked)
+                              }
+                              type="checkbox"
+                              id={el}
+                              className="peer sr-only"
+                            />
+                            <span className=" grid place-content-center transition-all w-5 h-5 rounded border border-zinc-400 peer-checked:bg-(--prime) peer-checked:border-(--prime)">
+                              <Check color="#fff" size={16} />
+                            </span>
+                            {el}
+                          </label>
+                        ))}
+                      </DropFIlterItem>
+                    );
+                  }
+
+                  return (
+                    <DropFIlterItem
+                      key={key}
+                      label={filterNames[key as keyof ProductFilters] || key}
+                    >
+                      <label
+                        htmlFor={key}
+                        className="flex items-center gap-2 cursor-pointer "
+                      >
+                        <input
+                          onChange={(e) => setDiscount(e.currentTarget.checked)}
+                          type="checkbox"
+                          id={key}
+                          className="peer sr-only"
+                        />
+                        <span className=" grid place-content-center transition-all w-5 h-5 rounded border border-zinc-400 peer-checked:bg-(--prime) peer-checked:border-(--prime)">
+                          <Check color="#fff" size={16} />
+                        </span>
+                        Да
+                      </label>
+                    </DropFIlterItem>
+                  );
+                })}
               </div>
               <div className=" flex flex-col gap-5"></div>
             </div>

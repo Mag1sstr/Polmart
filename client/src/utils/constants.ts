@@ -1,3 +1,4 @@
+import type { ProductFilters } from "../store/api";
 import { ROUTES } from "./routes";
 
 export const NAV_LINKS = [
@@ -8,3 +9,10 @@ export const NAV_LINKS = [
   { name: "Галерея", path: ROUTES.GALERY },
   { name: "Контакты", path: ROUTES.CONTACTS },
 ];
+
+type FilterNames = keyof ProductFilters;
+
+export const filterNames: Partial<Record<FilterNames, string>> = {
+  country: "Страна",
+  moistureResistance: "Влагостойкость",
+};
