@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { Product } from "../models/Product";
+import { IProduct, Product } from "../models/Product";
 import { Category } from "../models/Category";
 import { SortOrder } from "mongoose";
 
@@ -136,6 +136,69 @@ export const getProducts = async (
     });
   } catch (err) {
     next(err);
+  }
+};
+
+export const getProductFilters = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { category } = req.query;
+    const filters: any = {};
+    if (category) {
+      const categoryDoc = await Category.findOne({ slug: category });
+      if (categoryDoc) filters.category = categoryDoc._id;
+    }
+    const products = await Product.find(filters).populate("category").lean();
+    function buildFilters(products: IProduct[]) {
+      const filters: Record<string, Set<string | number | boolean>> = {};
+
+      const excludedFields = new Set([
+        "_id",
+        "__v",
+        "title",
+        "category",
+        "discount",
+        "description",
+        "price",
+        "isNew",
+        "images",
+        "createdAt",
+        "updatedAt",
+      ]);
+
+      products.forEach((product) => {
+        Object.entries(product).forEach(([key, value]) => {
+          if (excludedFields.has(key)) return;
+
+          if (
+            value === "" ||
+            value === 0 ||
+            value === null ||
+            value === undefined
+          )
+            return;
+
+          if (typeof value === "object") return;
+
+          if (!filters[key]) {
+            filters[key] = new Set();
+          }
+
+          filters[key].add(value);
+        });
+      });
+
+      return Object.fromEntries(
+        Object.entries(filters).map(([key, set]) => [key, [...set]]),
+      );
+    }
+
+    res.json(buildFilters(products));
+  } catch (error) {
+    next(error);
   }
 };
 
