@@ -6,12 +6,12 @@ import CompareBtn from "../components/ui/CompareBtn";
 
 function PublicLayout() {
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <WhatsappBtn />
       <CompareBtn />
 
       <Header />
-      <main>
+      <main className="flex-1">
         <Outlet />
       </main>
       <Footer />

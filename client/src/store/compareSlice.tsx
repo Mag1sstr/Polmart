@@ -13,7 +13,8 @@ export const compareSlice = createSlice({
   name: "compareSlice",
   initialState,
   reducers: {
-    addToCompare(state, action) {
+    addToCompare(state, action: PayloadAction<Product>) {
+      if (state.compareData.some((el) => el._id === action.payload._id)) return;
       state.compareData.push(action.payload);
       localStorage.setItem("ptcompare", JSON.stringify(state.compareData));
     },
@@ -26,6 +27,6 @@ export const compareSlice = createSlice({
   },
 });
 
-export const { addToCompare } = compareSlice.actions;
+export const { addToCompare, deleteCompareItem } = compareSlice.actions;
 
 export default compareSlice.reducer;

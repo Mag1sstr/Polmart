@@ -11,6 +11,7 @@ import GalleryPage from "../../pages/GalleryPage";
 import NewsPage from "../../pages/NewsPage";
 import SearchPage from "../../pages/SearchPage";
 import PublicLayout from "../../pages/PublicLayout";
+import ComparePage from "../../pages/ComparePage";
 
 function AppRouter() {
   return (
@@ -23,6 +24,7 @@ function AppRouter() {
         <Route path={ROUTES.GALERY} element={<GalleryPage />} />
         <Route path={ROUTES.NEWS} element={<NewsPage />} />
         <Route path={"/search"} element={<SearchPage />} />
+        <Route path="/compare" element={<ComparePage />} />
 
         <Route
           path={ROUTES.CATALOG_PRODUCTS(":categorySlug")}
