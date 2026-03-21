@@ -156,22 +156,57 @@ function SingleProductPage() {
               <div className="py-7.5">
                 {currentTab === "Описание" && <div>{product?.description}</div>}
                 {currentTab === "Характеристики" && (
-                  <div>
-                    Откройте для себя преимущества использования
-                    высококачественного влагостойкого ламината с уникальной
-                    коллекцией Grand Wood Luxe. Толщина 12 мм делает его
-                    чрезвычайно стабильным и прочным. Он также может
-                    использоваться с теплым полом и позволит вам наслаждаться
-                    приятным на ощупь теплым покрытием. На комфорт пользователя
-                    также влияет синхронная структура, с четко видимым и
-                    ощутимым расположением рисунка. <br /> <br />
-                    Влагостойкий ламинат VöLKE Herringbone доступен в нескольких
-                    декорах. Они напоминают натуральное дерево светлых и темных
-                    оттенков коричневого и нежно отбеленных серых. Отдельные
-                    доски заметно отличаются друг от друга, поэтому пол выглядит
-                    естественно. Это стало возможным благодаря дополнительной
-                    пропиткой краев и защитой V-образной фаской. <br /> <br />
-                    From Sweden with love!
+                  <div className="text-[18px]">
+                    <div className="flex p-2.5 bg-[#ececec] not-odd:bg-[#73b21180]">
+                      <p className="flex-1">Цена</p>
+                      <p className="flex-1">{product.price}</p>
+                    </div>
+                    <div className="flex p-2.5 bg-[#ececec] not-odd:bg-[#73b21180]">
+                      <p className="flex-1">Новинка</p>
+                      <p className="flex-1">{product.isNew ? "Да" : "Нет"}</p>
+                    </div>
+                    <div className="flex p-2.5 bg-[#ececec] not-odd:bg-[#73b21180]">
+                      <p className="flex-1">Страна</p>
+                      <p className="flex-1">{product.country || "Нет"}</p>
+                    </div>
+                    <div className="flex p-2.5 bg-[#ececec] not-odd:bg-[#73b21180]">
+                      <p className="flex-1">Категория</p>
+                      <p className="flex-1">{product.category.name}</p>
+                    </div>
+                    <div className="flex p-2.5 bg-[#ececec] not-odd:bg-[#73b21180]">
+                      <p className="flex-1">Производитель</p>
+                      <p className="flex-1">{product.manufacturer || "Нет"}</p>
+                    </div>
+                    <div className="flex p-2.5 bg-[#ececec] not-odd:bg-[#73b21180]">
+                      <p className="flex-1">Влагостойкость</p>
+                      <p className="flex-1">
+                        {product.moistureResistance ? "Да" : "Нет"}
+                      </p>
+                    </div>
+                    <div className="flex p-2.5 bg-[#ececec] not-odd:bg-[#73b21180]">
+                      <p className="flex-1">Материал</p>
+                      <p className="flex-1">{product.material || "Нет"}</p>
+                    </div>
+                    <div className="flex p-2.5 bg-[#ececec] not-odd:bg-[#73b21180]">
+                      <p className="flex-1">Коллекция</p>
+                      <p className="flex-1">{product.collection || "Нет"}</p>
+                    </div>
+                    <div className="flex p-2.5 bg-[#ececec] not-odd:bg-[#73b21180]">
+                      <p className="flex-1">Размер</p>
+                      <p className="flex-1">{product.size || "Нет"}</p>
+                    </div>
+                    <div className="flex p-2.5 bg-[#ececec] not-odd:bg-[#73b21180]">
+                      <p className="flex-1">Рисунок</p>
+                      <p className="flex-1">{product.pattern || "Нет"}</p>
+                    </div>
+                    <div className="flex p-2.5 bg-[#ececec] not-odd:bg-[#73b21180]">
+                      <p className="flex-1">Длина доски(миллиметры)</p>
+                      <p className="flex-1">{product.boardLengthMm || "Нет"}</p>
+                    </div>
+                    <div className="flex p-2.5 bg-[#ececec] not-odd:bg-[#73b21180]">
+                      <p className="flex-1">Ширина доски(миллиметры)</p>
+                      <p className="flex-1">{product.boardWidthMm || "Нет"}</p>
+                    </div>
                   </div>
                 )}
               </div>
