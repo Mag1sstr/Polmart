@@ -1,12 +1,13 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Product } from "./api";
+import { getLocalStorageValue } from "../utils/getLocalStorageValue";
 
 interface IInitState {
   compareData: Product[];
 }
 
 const initialState: IInitState = {
-  compareData: [],
+  compareData: getLocalStorageValue("ptcompare") || [],
 };
 
 export const compareSlice = createSlice({
