@@ -3,15 +3,19 @@ import Breadcrumbs from "../components/layout/Breadcrumbs";
 import Group from "../components/layout/Group";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { deleteCompareItem } from "../store/compareSlice";
+import { useState } from "react";
+import { getUniqueValues } from "../utils/getUniqueValues";
 
 function ComparePage() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { compareData } = useAppSelector((state) => state.compare);
+  const [showUnique, setShowUnique] = useState(false);
 
   const handleDelete = (id: string) => {
     dispatch(deleteCompareItem(id));
   };
+  console.log(getUniqueValues(compareData));
 
   return (
     <>
@@ -21,10 +25,16 @@ function ComparePage() {
           <h1 className="my-5 text-[32px] font-bold">Сравнение</h1>
           <div className="flex gap-1 mb-5">
             <p className="self-center">Показаны:</p>
-            <button className="py-1.75 px-2.75 font-bold grid place-content-center text-[12px] text-[#f2f2f2] bg-[#606060] shadow-[0_1px_#fff,inset_0_1px_5px_rgba(0,0,0,0.4)] rounded">
+            <button
+              onClick={() => setShowUnique(false)}
+              className={`py-1.75 px-2.75 font-bold grid place-content-center text-[12px] rounded transition-all cursor-pointer ${!showUnique ? "text-[#f2f2f2] bg-[#606060] border border-transparent shadow-[0_1px_#fff,inset_0_1px_5px_rgba(0,0,0,0.4)]" : "border border-[#c9c9c9]  text-[#717171] bg-[#fefefe]"}   `}
+            >
               Все характеристики
             </button>
-            <button className="py-1.75 px-2.75 font-bold grid place-content-center text-[12px] border border-[#c9c9c9] rounded text-[#717171] bg-[#fefefe]">
+            <button
+              onClick={() => setShowUnique(true)}
+              className={`py-1.75 px-2.75 font-bold grid place-content-center text-[12px] rounded transition-all cursor-pointer ${showUnique ? "text-[#f2f2f2] bg-[#606060] border border-transparent shadow-[0_1px_#fff,inset_0_1px_5px_rgba(0,0,0,0.4)]" : "border border-[#c9c9c9]  text-[#717171] bg-[#fefefe]"} `}
+            >
               Только различающиеся
             </button>
           </div>
