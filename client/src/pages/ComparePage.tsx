@@ -39,69 +39,100 @@ function ComparePage() {
             </button>
           </div>
           <div className="flex overflow-auto">
-            <div className="flex flex-col flex-1 max-w-[300px] font-bold">
-              <div className="not-even:bg-white py-2 px-5">Название</div>
-              <div className="not-even:bg-white py-2 px-5">Цена</div>
-              <div className="not-even:bg-white py-2 px-5">Класс</div>
-              <div className="not-even:bg-white py-2 px-5">Длина</div>
-              <div className="not-even:bg-white py-2 px-5">Ширина</div>
-              <div className="not-even:bg-white py-2 px-5">Упаковка</div>
-              <div className="not-even:bg-white py-2 px-5">Влагостойкость</div>
-              <div className="not-even:bg-white py-2 px-5">Материал</div>
-              <div className="not-even:bg-white py-2 px-5">Коллекция</div>
-              <div className="not-even:bg-white py-2 px-5">Производитель</div>
-              <div className="not-even:bg-white py-2 px-5">Страна</div>
-            </div>
-            {compareData.map((el) => (
-              <div key={el._id} className="flex flex-col min-w-[300px] flex-1">
-                <div
-                  onClick={() =>
-                    navigate(`/catalog/${el.category.slug}/${el._id}`)
-                  }
-                  className="not-even:bg-white py-2 px-5 underline cursor-pointer whitespace-nowrap text-ellipsis overflow-hidden"
-                  title={el.title}
-                >
-                  {el.title || "Нет"}
+            {showUnique ? (
+              // <div className="flex flex-col flex-1 max-w-[300px] font-bold">
+              //     <div className="not-even:bg-white py-2 px-5">Название</div>
+              //     <div className="not-even:bg-white py-2 px-5">Цена</div>
+              //     <div className="not-even:bg-white py-2 px-5">Класс</div>
+              //     <div className="not-even:bg-white py-2 px-5">Длина</div>
+              //     <div className="not-even:bg-white py-2 px-5">Ширина</div>
+              //     <div className="not-even:bg-white py-2 px-5">Упаковка</div>
+              //     <div className="not-even:bg-white py-2 px-5">
+              //       Влагостойкость
+              //     </div>
+              //     <div className="not-even:bg-white py-2 px-5">Материал</div>
+              //     <div className="not-even:bg-white py-2 px-5">Коллекция</div>
+              //     <div className="not-even:bg-white py-2 px-5">
+              //       Производитель
+              //     </div>
+              //     <div className="not-even:bg-white py-2 px-5">Страна</div>
+              //   </div>
+              //   {getUniqueValues(compareData)}
+              <p>dd</p>
+            ) : (
+              <>
+                <div className="flex flex-col flex-1 max-w-[300px] font-bold">
+                  <div className="not-even:bg-white py-2 px-5">Название</div>
+                  <div className="not-even:bg-white py-2 px-5">Цена</div>
+                  <div className="not-even:bg-white py-2 px-5">Класс</div>
+                  <div className="not-even:bg-white py-2 px-5">Длина</div>
+                  <div className="not-even:bg-white py-2 px-5">Ширина</div>
+                  <div className="not-even:bg-white py-2 px-5">Упаковка</div>
+                  <div className="not-even:bg-white py-2 px-5">
+                    Влагостойкость
+                  </div>
+                  <div className="not-even:bg-white py-2 px-5">Материал</div>
+                  <div className="not-even:bg-white py-2 px-5">Коллекция</div>
+                  <div className="not-even:bg-white py-2 px-5">
+                    Производитель
+                  </div>
+                  <div className="not-even:bg-white py-2 px-5">Страна</div>
                 </div>
-                <div className="not-even:bg-white py-2 px-5">
-                  {el.price || "Нет"}
-                </div>
-                <div className="not-even:bg-white py-2 px-5">
-                  {el.class || "Нет"}
-                </div>
-                <div className="not-even:bg-white py-2 px-5">
-                  {el.boardLengthMm || "Нет"}
-                </div>
-                <div className="not-even:bg-white py-2 px-5">
-                  {el.boardWidthMm || "Нет"}
-                </div>
-                <div className="not-even:bg-white py-2 px-5">
-                  {el.package || "Нет"}
-                </div>
-                <div className="not-even:bg-white py-2 px-5">
-                  {el.moistureResistance ? "Да" : "Нет"}
-                </div>
-                <div className="not-even:bg-white py-2 px-5">
-                  {el.material || "Нет"}
-                </div>
-                <div className="not-even:bg-white py-2 px-5">
-                  {el.collection || "Нет"}
-                </div>
-                <div className="not-even:bg-white py-2 px-5">
-                  {el.manufacturer || "Нет"}
-                </div>
+                {compareData.map((el) => (
+                  <div
+                    key={el._id}
+                    className="flex flex-col min-w-[300px] flex-1"
+                  >
+                    <div
+                      onClick={() =>
+                        navigate(`/catalog/${el.category.slug}/${el._id}`)
+                      }
+                      className="not-even:bg-white py-2 px-5 underline cursor-pointer whitespace-nowrap text-ellipsis overflow-hidden"
+                      title={el.title}
+                    >
+                      {el.title || "Нет"}
+                    </div>
+                    <div className="not-even:bg-white py-2 px-5">
+                      {el.price || "Нет"}
+                    </div>
+                    <div className="not-even:bg-white py-2 px-5">
+                      {el.class || "Нет"}
+                    </div>
+                    <div className="not-even:bg-white py-2 px-5">
+                      {el.boardLengthMm || "Нет"}
+                    </div>
+                    <div className="not-even:bg-white py-2 px-5">
+                      {el.boardWidthMm || "Нет"}
+                    </div>
+                    <div className="not-even:bg-white py-2 px-5">
+                      {el.package || "Нет"}
+                    </div>
+                    <div className="not-even:bg-white py-2 px-5">
+                      {el.moistureResistance ? "Да" : "Нет"}
+                    </div>
+                    <div className="not-even:bg-white py-2 px-5">
+                      {el.material || "Нет"}
+                    </div>
+                    <div className="not-even:bg-white py-2 px-5">
+                      {el.collection || "Нет"}
+                    </div>
+                    <div className="not-even:bg-white py-2 px-5">
+                      {el.manufacturer || "Нет"}
+                    </div>
 
-                <div className="not-even:bg-white py-2 px-5">
-                  {el.country || "Нет"}
-                </div>
-                <div
-                  onClick={() => handleDelete(el._id)}
-                  className="not-even:bg-white py-2 px-5 text-blue-400 underline text-sm cursor-pointer"
-                >
-                  Удалить
-                </div>
-              </div>
-            ))}
+                    <div className="not-even:bg-white py-2 px-5">
+                      {el.country || "Нет"}
+                    </div>
+                    <div
+                      onClick={() => handleDelete(el._id)}
+                      className="not-even:bg-white py-2 px-5 text-blue-400 underline text-sm cursor-pointer"
+                    >
+                      Удалить
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         </Group>
       </section>
