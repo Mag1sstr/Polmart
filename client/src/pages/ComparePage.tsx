@@ -6,6 +6,14 @@ import { deleteCompareItem } from "../store/compareSlice";
 import { Fragment, useState } from "react";
 import { getUniqueValues } from "../utils/getUniqueValues";
 
+const productKeysNames: Record<string, string> = {
+  title: "Название",
+  price: "Цена",
+  discount: "Скидка",
+  moistureResistance: "Влагостойкость",
+  isNew: "Новинка",
+};
+
 function ComparePage() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -38,71 +46,108 @@ function ComparePage() {
               Только различающиеся
             </button>
           </div>
-          <div className="flex overflow-auto">
-            <div className="flex flex-col flex-1 max-w-[300px] font-bold">
-              <div className="not-even:bg-white py-2 px-5">Название</div>
-              <div className="not-even:bg-white py-2 px-5">Цена</div>
-              <div className="not-even:bg-white py-2 px-5">Класс</div>
-              <div className="not-even:bg-white py-2 px-5">Длина</div>
-              <div className="not-even:bg-white py-2 px-5">Ширина</div>
-              <div className="not-even:bg-white py-2 px-5">Упаковка</div>
-              <div className="not-even:bg-white py-2 px-5">Влагостойкость</div>
-              <div className="not-even:bg-white py-2 px-5">Материал</div>
-              <div className="not-even:bg-white py-2 px-5">Коллекция</div>
-              <div className="not-even:bg-white py-2 px-5">Производитель</div>
-              <div className="not-even:bg-white py-2 px-5">Страна</div>
-            </div>
-            {compareData.map((el) => (
-              <div key={el._id} className="flex flex-col min-w-[300px] flex-1">
-                <div
-                  onClick={() =>
-                    navigate(`/catalog/${el.category.slug}/${el._id}`)
-                  }
-                  className="not-even:bg-white py-2 px-5 underline cursor-pointer whitespace-nowrap text-ellipsis overflow-hidden"
-                  title={el.title}
-                >
-                  {el.title || "Нет"}
-                </div>
-                <div className="not-even:bg-white py-2 px-5">
-                  {el.price || "Нет"}
-                </div>
-                <div className="not-even:bg-white py-2 px-5">
-                  {el.class || "Нет"}
-                </div>
-                <div className="not-even:bg-white py-2 px-5">
-                  {el.boardLengthMm || "Нет"}
-                </div>
-                <div className="not-even:bg-white py-2 px-5">
-                  {el.boardWidthMm || "Нет"}
-                </div>
-                <div className="not-even:bg-white py-2 px-5">
-                  {el.package || "Нет"}
-                </div>
-                <div className="not-even:bg-white py-2 px-5">
-                  {el.moistureResistance ? "Да" : "Нет"}
-                </div>
-                <div className="not-even:bg-white py-2 px-5">
-                  {el.material || "Нет"}
-                </div>
-                <div className="not-even:bg-white py-2 px-5">
-                  {el.collection || "Нет"}
-                </div>
-                <div className="not-even:bg-white py-2 px-5">
-                  {el.manufacturer || "Нет"}
-                </div>
+          {showUnique ? (
+            <div className="overflow-hidden flex">
+              {getUniqueValues(compareData).map((el) => {
+                const objEl = Object.keys(el);
+                console.log(objEl);
 
+                return (
+                  <div key={el.id} className="flex flex-col flex-1">
+                    {el.title && (
+                      <div className="flex">
+                        <p>Название</p>
+                        <p className="">{el.title}</p>
+                      </div>
+                    )}
+                    {el.price && (
+                      <div className="flex">
+                        <p>Цена</p>
+                        <p className="">{el.price}</p>
+                      </div>
+                    )}
+                    {el.discount && (
+                      <div className="flex">
+                        <p>Скидка</p>
+                        <p className="">{el.discount}</p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="flex overflow-auto">
+              <div className="flex flex-col flex-1 max-w-[300px] font-bold">
+                <div className="not-even:bg-white py-2 px-5">Название</div>
+                <div className="not-even:bg-white py-2 px-5">Цена</div>
+                <div className="not-even:bg-white py-2 px-5">Класс</div>
+                <div className="not-even:bg-white py-2 px-5">Длина</div>
+                <div className="not-even:bg-white py-2 px-5">Ширина</div>
+                <div className="not-even:bg-white py-2 px-5">Упаковка</div>
                 <div className="not-even:bg-white py-2 px-5">
-                  {el.country || "Нет"}
+                  Влагостойкость
                 </div>
-                <div
-                  onClick={() => handleDelete(el._id)}
-                  className="not-even:bg-white py-2 px-5 text-blue-400 underline text-sm cursor-pointer"
-                >
-                  Удалить
-                </div>
+                <div className="not-even:bg-white py-2 px-5">Материал</div>
+                <div className="not-even:bg-white py-2 px-5">Коллекция</div>
+                <div className="not-even:bg-white py-2 px-5">Производитель</div>
+                <div className="not-even:bg-white py-2 px-5">Страна</div>
               </div>
-            ))}
-          </div>
+              {compareData.map((el) => (
+                <div
+                  key={el._id}
+                  className="flex flex-col min-w-[300px] flex-1"
+                >
+                  <div
+                    onClick={() =>
+                      navigate(`/catalog/${el.category.slug}/${el._id}`)
+                    }
+                    className="not-even:bg-white py-2 px-5 underline cursor-pointer whitespace-nowrap text-ellipsis overflow-hidden"
+                    title={el.title}
+                  >
+                    {el.title || "Нет"}
+                  </div>
+                  <div className="not-even:bg-white py-2 px-5">
+                    {el.price || "Нет"}
+                  </div>
+                  <div className="not-even:bg-white py-2 px-5">
+                    {el.class || "Нет"}
+                  </div>
+                  <div className="not-even:bg-white py-2 px-5">
+                    {el.boardLengthMm || "Нет"}
+                  </div>
+                  <div className="not-even:bg-white py-2 px-5">
+                    {el.boardWidthMm || "Нет"}
+                  </div>
+                  <div className="not-even:bg-white py-2 px-5">
+                    {el.package || "Нет"}
+                  </div>
+                  <div className="not-even:bg-white py-2 px-5">
+                    {el.moistureResistance ? "Да" : "Нет"}
+                  </div>
+                  <div className="not-even:bg-white py-2 px-5">
+                    {el.material || "Нет"}
+                  </div>
+                  <div className="not-even:bg-white py-2 px-5">
+                    {el.collection || "Нет"}
+                  </div>
+                  <div className="not-even:bg-white py-2 px-5">
+                    {el.manufacturer || "Нет"}
+                  </div>
+
+                  <div className="not-even:bg-white py-2 px-5">
+                    {el.country || "Нет"}
+                  </div>
+                  <div
+                    onClick={() => handleDelete(el._id)}
+                    className="not-even:bg-white py-2 px-5 text-blue-400 underline text-sm cursor-pointer"
+                  >
+                    Удалить
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </Group>
       </section>
     </>
