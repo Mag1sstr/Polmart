@@ -3,7 +3,7 @@ import Breadcrumbs from "../components/layout/Breadcrumbs";
 import Group from "../components/layout/Group";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { deleteCompareItem } from "../store/compareSlice";
-import { Fragment, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { getUniqueValues } from "../utils/getUniqueValues";
 
 const productKeysNames: Record<string, string> = {
@@ -54,7 +54,8 @@ function ComparePage() {
 
                 return (
                   <div key={el.id} className="flex flex-col flex-1">
-                    {el.title && (
+                    {}
+                    {/* {el.title && (
                       <div className="flex">
                         <p>Название</p>
                         <p className="">{el.title}</p>
@@ -71,7 +72,7 @@ function ComparePage() {
                         <p>Скидка</p>
                         <p className="">{el.discount}</p>
                       </div>
-                    )}
+                    )} */}
                   </div>
                 );
               })}
